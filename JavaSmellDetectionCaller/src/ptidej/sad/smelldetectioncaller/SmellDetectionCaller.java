@@ -10,6 +10,8 @@
  ******************************************************************************/
 package ptidej.sad.smelldetectioncaller;
 
+import java.util.Set;
+
 import ptidej.sad.smelldetectioncaller.util.DirectoryFilter;
 import ptidej.sad.smelldetectioncaller.util.SourceDirectoryScanner;
 
@@ -42,11 +44,21 @@ public class SmellDetectionCaller {
 			System.out.println(path);
 		}
 		
-		SmellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(
+		
+		DesignSmellOccurenceVisitor visitor = new DesignSmellOccurenceVisitor();
+		
+		SmellDetectionHelper smellDetectionHelper = new SmellDetectionHelper(visitor);
+		smellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(
 				SmellDetectionHelper.SMELLS,
 				new String[]{},
 				sourcePaths,
 				projectName, outputFolder);
+
+		
+		Set<String> antisingletons = visitor.getAntiSingletons();
+		for(String clazz: antisingletons){
+			System.out.println(clazz);
+		}
 		
 	}
 	

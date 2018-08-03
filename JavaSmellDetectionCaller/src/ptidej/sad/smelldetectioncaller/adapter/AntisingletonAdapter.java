@@ -22,7 +22,7 @@ public class AntisingletonAdapter extends DesignSmellAdapter {
 			List<OccurrenceComponent> components = occurrence.getComponents();
 			if (components.size() == 3){
 				// class name is the second component
-				visitor.visitAntiSingleton(components.get(2).getDisplayValue());	
+				visitor.visitAntiSingleton(components.get(1).getDisplayValue());	
 			}
 		}
 		

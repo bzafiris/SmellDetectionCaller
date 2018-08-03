@@ -28,6 +28,8 @@ import padl.kernel.ICodeLevelModel;
 import padl.kernel.IIdiomLevelModel;
 import padl.kernel.exception.CreationException;
 import padl.kernel.impl.Factory;
+import ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapter;
+import ptidej.sad.smelldetectioncaller.adapter.SmellAdapterFactory;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceBuilder;
 import ptidej.solver.OccurrenceComponent;
@@ -36,135 +38,71 @@ import util.io.ProxyConsole;
 import util.io.ProxyDisk;
 import util.io.ReaderInputStream;
 
+import static ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapter.*;
+
 /**
  * @author Yann-Gaël Guéhéneuc
- * @since  2007/03/02
+ * @since 2007/03/02
  * @author Naouel Moha
- * @since  2008/07/15
- * Modified to extract the name of classes and number of defects 
- * for the association between defects and bugs
+ * @since 2008/07/15 Modified to extract the name of classes and number of
+ *        defects for the association between defects and bugs
  * 
- * TODO: This class should not exist and calls should be redirected to ModelGenerator!
+ *        TODO: This class should not exist and calls should be redirected to
+ *        ModelGenerator!
  */
 public final class SmellDetectionHelper {
-	private static final String TRADITION_BREAKER = "TraditionBreaker";
 
-	private static final String SWISS_ARMY_KNIFE = "SwissArmyKnife";
+	public static final String[] SMELLS = new String[] { ANTISINGLETON, BASE_CLASS_KNOWS_DERIVED_CLASS,
+			BASE_CLASS_SHOULD_BE_ABSTRACT, BLOB, CLASS_DATA_SHOULD_BE_PRIVATE, COMPLEX_CLASS, FUNCTIONAL_DECOMPOSITION,
+			LARGE_CLASS, LAZY_CLASS, LONG_METHOD, LONG_PARAMETER_LIST, MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX,
+			MESSAGE_CHAINS, REFUSED_PARENT_BEQUEST, SPAGHETTI_CODE, SPECULATIVE_GENERALITY, SWISS_ARMY_KNIFE,
+			TRADITION_BREAKER };
 
-	private static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
+	private ISmellOccurenceVisitor smellOccurenceVisitor;
 
-	private static final String SPAGHETTI_CODE = "SpaghettiCode";
-
-	private static final String REFUSED_PARENT_BEQUEST = "RefusedParentBequest";
-
-	private static final String MESSAGE_CHAINS = "MessageChains";
-
-	private static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
-
-	private static final String LONG_PARAMETER_LIST = "LongParameterList";
-
-	private static final String LONG_METHOD = "LongMethod";
-
-	private static final String LAZY_CLASS = "LazyClass";
-
-	private static final String LARGE_CLASS = "LargeClass";
-
-	private static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";
-
-	private static final String COMPLEX_CLASS = "ComplexClass";
-
-	private static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
-
-	private static final String BLOB = "Blob";
-
-	private static final String BASE_CLASS_SHOULD_BE_ABSTRACT = "BaseClassShouldBeAbstract";
-
-	private static final String BASE_CLASS_KNOWS_DERIVED_CLASS = "BaseClassKnowsDerivedClass";
-	
-	public static final String[] SMELLS = new String[] { "AntiSingleton",
-			BASE_CLASS_KNOWS_DERIVED_CLASS, BASE_CLASS_SHOULD_BE_ABSTRACT, BLOB,
-			CLASS_DATA_SHOULD_BE_PRIVATE, COMPLEX_CLASS,
-			FUNCTIONAL_DECOMPOSITION, LARGE_CLASS, LAZY_CLASS, LONG_METHOD,
-			LONG_PARAMETER_LIST, MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX,
-			MESSAGE_CHAINS, REFUSED_PARENT_BEQUEST, SPAGHETTI_CODE,
-			SPECULATIVE_GENERALITY, SWISS_ARMY_KNIFE, TRADITION_BREAKER };
-	//	public static final String[] SMELLS = new String[] { "LongMethod",
-	//			"SpaghettiCode" };
-
-	private SmellDetectionHelper() {
+	public SmellDetectionHelper(ISmellOccurenceVisitor smellOccurenceVisitor) {
+		super();
+		this.smellOccurenceVisitor = smellOccurenceVisitor;
 	}
 
-	public static void main(final String[] args) {
-		try {
-			final LineNumberReader reader =
-				new LineNumberReader(ProxyDisk.getInstance().fileAbsoluteInput(
-					"rsc/ArgoUML0198_Test.csv"));
-			final List<String> listOfPaths = new ArrayList<String>();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String className = line.substring(0, line.indexOf(';'));
-				className = className.replace('.', '/');
-				className =
-					"D:/Software/P-MARt Workspace/ArgoUML v0.19.8/bin/"
-							+ className;
-				className += ".class";
-				listOfPaths.add(className);
-			}
-
-			final String[] somePaths = new String[listOfPaths.size()];
-			listOfPaths.toArray(somePaths);
-
-			SmellDetectionHelper.analyseCodeLevelModelFromJavaClassFiles(
-				somePaths,
-				"ArgoUML",
-				"rsc/ArgoUML v0.19.8 Abdou's SUBSET/");
-		}
-		catch (final FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (final IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static final void analyseCodeLevelModel(
-		final String[] someSmells,
-		final String aName,
-		final IAbstractLevelModel idiomLevelModel,
-		final String anOutputDirectory) {
+	public final void analyseCodeLevelModel(final String[] someSmells, final String aName,
+			final IAbstractLevelModel idiomLevelModel, final String anOutputDirectory) {
 
 		try {
 			for (int i = 0; i < someSmells.length; i++) {
 				final String antipatternName = someSmells[i];
 
 				final long startTime = System.currentTimeMillis();
-				final Class<?> detectionClass =
-					Class.forName("sad.designsmell.detection.repository."
-							+ antipatternName + '.' + antipatternName
-							+ "Detection");
-				final IDesignSmellDetection detection =
-					(IDesignSmellDetection) detectionClass.newInstance();
+
+				DesignSmellAdapter designSmellAdapter = SmellAdapterFactory.getAdapter(antipatternName);
+
+				if (designSmellAdapter != null) {
+					designSmellAdapter.detect(idiomLevelModel);
+
+					designSmellAdapter.accept(smellOccurenceVisitor);
+				}
+
+				final Class<?> detectionClass = Class.forName("sad.designsmell.detection.repository." + antipatternName
+						+ '.' + antipatternName + "Detection");
+				final IDesignSmellDetection detection = (IDesignSmellDetection) detectionClass.newInstance();
 
 				detection.detect(idiomLevelModel);
 
-				final String path =
-					anOutputDirectory + "DetectionResults in " + aName
-							+ " for " + antipatternName + ".ini";
+				final String path = anOutputDirectory + "DetectionResults in " + aName + " for " + antipatternName
+						+ ".ini";
 				detection.output(new PrintWriter(ProxyDisk
-					//.getInstance().fileTempString()));
-					.getInstance().fileTempOutput(path)));
+						// .getInstance().fileTempString()));
+						.getInstance().fileTempOutput(path)));
 
 				final Properties properties = new Properties();
-				properties.load(new ReaderInputStream(ProxyDisk
-					.getInstance()
-					.fileTempInput(path)));
-				final OccurrenceBuilder solutionBuilder =
-					OccurrenceBuilder.getInstance();
-				final Occurrence[] solutions =
-					solutionBuilder.getCanonicalOccurrences(properties);
+				properties.load(new ReaderInputStream(ProxyDisk.getInstance().fileTempInput(path)));
+				final OccurrenceBuilder solutionBuilder = OccurrenceBuilder.getInstance();
+				final Occurrence[] solutions = solutionBuilder.getCanonicalOccurrences(properties);
 
-//				extractClassesDefects(anOutputDirectory, aName, (IIdiomLevelModel) idiomLevelModel, someSmells[i], properties, solutionBuilder);
-				
+				// extractClassesDefects(anOutputDirectory, aName,
+				// (IIdiomLevelModel) idiomLevelModel, someSmells[i],
+				// properties, solutionBuilder);
+
 				System.out.print(solutions.length);
 				System.out.print(" solutions for ");
 				System.out.print(antipatternName);
@@ -174,44 +112,34 @@ public final class SmellDetectionHelper {
 				System.out.print(System.currentTimeMillis() - startTime);
 				System.out.println(" ms.");
 
-				//	this.extractClassesDefects(
-				//		anOutputDirectory,
-				//		aName,
-				//		idiomLevelModel,
-				//		antipatternName,
-				//		properties,
-				//		solutionBuilder);
+				// this.extractClassesDefects(
+				// anOutputDirectory,
+				// aName,
+				// idiomLevelModel,
+				// antipatternName,
+				// properties,
+				// solutionBuilder);
 			}
-		}
-		catch (final Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 			throw new RuntimeException(e);
 		}
 	}
-	public static final void analyseCodeLevelModel(
-		final String[] someSmells,
-		final String aName,
-		final ICodeLevelModel codeLevelModel,
-		final String anOutputDirectory) {
+
+	public final void analyseCodeLevelModel(final String[] someSmells, final String aName,
+			final ICodeLevelModel codeLevelModel, final String anOutputDirectory) {
 
 		try {
-			final IIdiomLevelModel idiomLevelModel =
-				(IIdiomLevelModel) new AACRelationshipsAnalysis()
+			final IIdiomLevelModel idiomLevelModel = (IIdiomLevelModel) new AACRelationshipsAnalysis()
 					.invoke(codeLevelModel);
 
-			SmellDetectionHelper.analyseCodeLevelModel(
-				someSmells,
-				aName,
-				idiomLevelModel,
-				anOutputDirectory);
-		}
-		catch (final UnsupportedSourceModelException e) {
+			analyseCodeLevelModel(someSmells, aName, idiomLevelModel, anOutputDirectory);
+		} catch (final UnsupportedSourceModelException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 		}
 	}
-	public static final void analyseCodeLevelModelFromEclipse(
-		final String anEclipsePath,
-		final String anOutputDirectory) {
+
+	public final void analyseCodeLevelModelFromEclipse(final String anEclipsePath, final String anOutputDirectory) {
 
 		final String pluginsPath = anEclipsePath + "plugins/";
 		final File pluginsDir = new File(pluginsPath);
@@ -228,27 +156,20 @@ public final class SmellDetectionHelper {
 				});
 
 				for (int j = 0; j < jarFiles.length; j++) {
-					final String jarPath =
-						pluginsPath + plugin + '/' + jarFiles[j];
+					final String jarPath = pluginsPath + plugin + '/' + jarFiles[j];
 					listOfJarFiles.add(jarPath);
 				}
-			}
-			else if (pluginFile.getAbsolutePath().endsWith(".jar")) {
+			} else if (pluginFile.getAbsolutePath().endsWith(".jar")) {
 				listOfJarFiles.add(pluginFile.getAbsolutePath());
 			}
 		}
 
-		final String[] arrayOfJarFiles =
-			(String[]) listOfJarFiles.toArray(new String[0]);
-		SmellDetectionHelper.analyseCodeLevelModelFromJARs(
-			arrayOfJarFiles,
-			anEclipsePath,
-			anOutputDirectory);
+		final String[] arrayOfJarFiles = (String[]) listOfJarFiles.toArray(new String[0]);
+		analyseCodeLevelModelFromJARs(arrayOfJarFiles, anEclipsePath, anOutputDirectory);
 	}
-	public static final void analyseCodeLevelModelFromJARs(
-		final String[] someJARFiles,
-		final String aName,
-		final String anOutputDirectory) {
+
+	public final void analyseCodeLevelModelFromJARs(final String[] someJARFiles, final String aName,
+			final String anOutputDirectory) {
 
 		System.out.print("Analysing ");
 		System.out.print(aName);
@@ -256,69 +177,44 @@ public final class SmellDetectionHelper {
 
 		try {
 			final long startTime = System.currentTimeMillis();
-			ICodeLevelModel codeLevelModel =
-				Factory.getInstance().createCodeLevelModel(aName);
-			codeLevelModel.create(new CompleteClassFileCreator(
-				someJARFiles,
-				true));
+			ICodeLevelModel codeLevelModel = Factory.getInstance().createCodeLevelModel(aName);
+			codeLevelModel.create(new CompleteClassFileCreator(someJARFiles, true));
 
-			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator =
-				new padl.statement.creator.classfiles.ConditionalModelAnnotator(
+			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator = new padl.statement.creator.classfiles.ConditionalModelAnnotator(
 					someJARFiles);
 			codeLevelModel = (ICodeLevelModel) annotator.invoke(codeLevelModel);
 
-			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 =
-				new padl.statement.creator.classfiles.LOCModelAnnotator(
+			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 = new padl.statement.creator.classfiles.LOCModelAnnotator(
 					someJARFiles);
-			codeLevelModel =
-				(ICodeLevelModel) annotator2.invoke(codeLevelModel);
+			codeLevelModel = (ICodeLevelModel) annotator2.invoke(codeLevelModel);
 
 			final long endTime = System.currentTimeMillis();
 			System.out.print("Model built in ");
 			System.out.print(endTime - startTime);
 			System.out.println(" ms.");
 
-			SmellDetectionHelper.analyseCodeLevelModel(
-				SmellDetectionHelper.SMELLS,
-				aName,
-				codeLevelModel,
-				anOutputDirectory);
-		}
-		catch (final CreationException e) {
+			analyseCodeLevelModel(SmellDetectionHelper.SMELLS, aName, codeLevelModel, anOutputDirectory);
+		} catch (final CreationException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final UnsupportedSourceModelException e) {
+		} catch (final UnsupportedSourceModelException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 		}
 	}
-	public static final void analyseCodeLevelModelFromJavaClassFiles(
-		final String aClassPath,
-		final String aName,
-		final String anOutputDirectoryName) {
 
-		SmellDetectionHelper.analyseCodeLevelModelFromJavaClassFiles(
-			SmellDetectionHelper.SMELLS,
-			aClassPath,
-			aName,
-			anOutputDirectoryName);
+	public final void analyseCodeLevelModelFromJavaClassFiles(final String aClassPath, final String aName,
+			final String anOutputDirectoryName) {
+
+		analyseCodeLevelModelFromJavaClassFiles(SmellDetectionHelper.SMELLS, aClassPath, aName, anOutputDirectoryName);
 	}
 
-	public static final void analyseCodeLevelModelFromJavaClassFiles(
-		final String[] somePaths,
-		final String aName,
-		final String anOutputDirectoryName) {
+	public final void analyseCodeLevelModelFromJavaClassFiles(final String[] somePaths, final String aName,
+			final String anOutputDirectoryName) {
 
-		SmellDetectionHelper.analyseCodeLevelModelFromJavaClassFiles(
-			SmellDetectionHelper.SMELLS,
-			somePaths,
-			aName,
-			anOutputDirectoryName);
+		analyseCodeLevelModelFromJavaClassFiles(SmellDetectionHelper.SMELLS, somePaths, aName, anOutputDirectoryName);
 	}
-	public static final void analyseCodeLevelModelFromJavaClassFiles(
-		final String[] someSmells,
-		final String aClassPath,
-		final String aName,
-		final String anOutputDirectoryName) {
+
+	public final void analyseCodeLevelModelFromJavaClassFiles(final String[] someSmells, final String aClassPath,
+			final String aName, final String anOutputDirectoryName) {
 
 		System.out.print("Analysing ");
 		System.out.print(aName);
@@ -326,69 +222,54 @@ public final class SmellDetectionHelper {
 
 		try {
 			final long startTime = System.currentTimeMillis();
-			final ICodeLevelModel codeLevelModel =
-				Factory.getInstance().createCodeLevelModel(aName);
-			codeLevelModel.create(new CompleteClassFileCreator(
-				new String[] { aClassPath },
-				true));
+			final ICodeLevelModel codeLevelModel = Factory.getInstance().createCodeLevelModel(aName);
+			codeLevelModel.create(new CompleteClassFileCreator(new String[] { aClassPath }, true));
 
-			//	final ModelAnnotatorLOC modelAnnotatorLOC = new ModelAnnotatorLOC();
-			//	modelAnnotatorLOC.annotateFromDirs(
-			//		new String[] { aClassPath },
-			//		codeLevelModel);
+			// final ModelAnnotatorLOC modelAnnotatorLOC = new
+			// ModelAnnotatorLOC();
+			// modelAnnotatorLOC.annotateFromDirs(
+			// new String[] { aClassPath },
+			// codeLevelModel);
 
-			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator =
-				new padl.statement.creator.classfiles.ConditionalModelAnnotator(
+			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator = new padl.statement.creator.classfiles.ConditionalModelAnnotator(
 					new String[] { aClassPath });
-			final ICodeLevelModel annotatedCodeLevelModel1 =
-				(ICodeLevelModel) annotator.invoke(codeLevelModel);
+			final ICodeLevelModel annotatedCodeLevelModel1 = (ICodeLevelModel) annotator.invoke(codeLevelModel);
 
-			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 =
-				new padl.statement.creator.classfiles.LOCModelAnnotator(
+			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 = new padl.statement.creator.classfiles.LOCModelAnnotator(
 					new String[] { aClassPath });
-			final ICodeLevelModel annotatedCodeLevelModel2 =
-				(ICodeLevelModel) annotator2.invoke(annotatedCodeLevelModel1);
+			final ICodeLevelModel annotatedCodeLevelModel2 = (ICodeLevelModel) annotator2
+					.invoke(annotatedCodeLevelModel1);
 
 			// Create the output directory if needed.
-			final String newOutputDirectoryName =
-				anOutputDirectoryName + aName + File.separatorChar;
+			final String newOutputDirectoryName = anOutputDirectoryName + aName + File.separatorChar;
 
 			// Yann 2013/05/30
 			// Not necessary thanks to ProxyDisk
-			//	final File newOutputDirectiory = new File(newOutputDirectoryName);
-			//	if (!newOutputDirectiory.exists()) {
-			//		newOutputDirectiory.mkdirs();
-			//	}
+			// final File newOutputDirectiory = new
+			// File(newOutputDirectoryName);
+			// if (!newOutputDirectiory.exists()) {
+			// newOutputDirectiory.mkdirs();
+			// }
 
 			final long endTime = System.currentTimeMillis();
 			System.out.print("Model built in ");
 			System.out.print(endTime - startTime);
 			System.out.println(" ms.");
 
-			SmellDetectionHelper.analyseCodeLevelModel(
-				someSmells,
-				aName,
-				annotatedCodeLevelModel2,
-				newOutputDirectoryName);
-		}
-		catch (final SecurityException e) {
+			analyseCodeLevelModel(someSmells, aName, annotatedCodeLevelModel2, newOutputDirectoryName);
+		} catch (final SecurityException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final CreationException e) {
+		} catch (final CreationException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final UnsupportedSourceModelException e) {
+		} catch (final UnsupportedSourceModelException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 		}
 	}
-	public static final void analyseCodeLevelModelFromJavaClassFiles(
-		final String[] someSmells,
-		final String[] somePaths,
-		final String aName,
-		final String anOutputDirectoryName) {
+
+	public final void analyseCodeLevelModelFromJavaClassFiles(final String[] someSmells, final String[] somePaths,
+			final String aName, final String anOutputDirectoryName) {
 
 		System.out.print("Analysing ");
 		System.out.print(aName);
@@ -396,112 +277,83 @@ public final class SmellDetectionHelper {
 
 		try {
 			final long startTime = System.currentTimeMillis();
-			final ICodeLevelModel codeLevelModel =
-				Factory.getInstance().createCodeLevelModel(aName);
-			codeLevelModel
-				.create(new CompleteClassFileCreator(somePaths, true));
+			final ICodeLevelModel codeLevelModel = Factory.getInstance().createCodeLevelModel(aName);
+			codeLevelModel.create(new CompleteClassFileCreator(somePaths, true));
 
-			//	final ModelAnnotatorLOC modelAnnotatorLOC = new ModelAnnotatorLOC();
-			//	modelAnnotatorLOC.annotateFromDirs(
-			//		new String[] { aClassPath },
-			//		codeLevelModel);
+			// final ModelAnnotatorLOC modelAnnotatorLOC = new
+			// ModelAnnotatorLOC();
+			// modelAnnotatorLOC.annotateFromDirs(
+			// new String[] { aClassPath },
+			// codeLevelModel);
 
-			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator =
-				new padl.statement.creator.classfiles.ConditionalModelAnnotator(
+			final padl.statement.creator.classfiles.ConditionalModelAnnotator annotator = new padl.statement.creator.classfiles.ConditionalModelAnnotator(
 					somePaths);
-			final ICodeLevelModel annotatedCodeLevelModel1 =
-				(ICodeLevelModel) annotator.invoke(codeLevelModel);
+			final ICodeLevelModel annotatedCodeLevelModel1 = (ICodeLevelModel) annotator.invoke(codeLevelModel);
 
-			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 =
-				new padl.statement.creator.classfiles.LOCModelAnnotator(
+			final padl.statement.creator.classfiles.LOCModelAnnotator annotator2 = new padl.statement.creator.classfiles.LOCModelAnnotator(
 					somePaths);
-			final ICodeLevelModel annotatedCodeLevelModel2 =
-				(ICodeLevelModel) annotator2.invoke(annotatedCodeLevelModel1);
+			final ICodeLevelModel annotatedCodeLevelModel2 = (ICodeLevelModel) annotator2
+					.invoke(annotatedCodeLevelModel1);
 
 			// Create the output directory if needed.
-			final String newOutputDirectoryName =
-				anOutputDirectoryName + aName + File.separatorChar;
+			final String newOutputDirectoryName = anOutputDirectoryName + aName + File.separatorChar;
 
 			// Yann 2013/05/30
 			// Not necessary thanks to ProxyDisk
-			//	final File newOutputDirectiory = new File(newOutputDirectoryName);
-			//	if (!newOutputDirectiory.exists()) {
-			//		newOutputDirectiory.mkdirs();
-			//	}
+			// final File newOutputDirectiory = new
+			// File(newOutputDirectoryName);
+			// if (!newOutputDirectiory.exists()) {
+			// newOutputDirectiory.mkdirs();
+			// }
 
 			final long endTime = System.currentTimeMillis();
 			System.out.print("Model built in ");
 			System.out.print(endTime - startTime);
 			System.out.println(" ms.");
 
-			SmellDetectionHelper.analyseCodeLevelModel(
-				someSmells,
-				aName,
-				annotatedCodeLevelModel2,
-				newOutputDirectoryName);
-		}
-		catch (final SecurityException e) {
+			analyseCodeLevelModel(someSmells, aName, annotatedCodeLevelModel2, newOutputDirectoryName);
+		} catch (final SecurityException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final CreationException e) {
+		} catch (final CreationException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final UnsupportedSourceModelException e) {
+		} catch (final UnsupportedSourceModelException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 		}
 	}
 
-	public static final void analyseCodeLevelModelFromJavaSourceFilesEclipse(
-		final String aSourcePath,
-		final String aName,
-		final String anOutputDirectoryName) {
+	public final void analyseCodeLevelModelFromJavaSourceFilesEclipse(final String aSourcePath, final String aName,
+			final String anOutputDirectoryName) {
 
-		SmellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(
-			SmellDetectionHelper.SMELLS,
-			aSourcePath,
-			aName,
-			anOutputDirectoryName);
+		analyseCodeLevelModelFromJavaSourceFilesEclipse(SmellDetectionHelper.SMELLS, aSourcePath, aName,
+				anOutputDirectoryName);
 	}
-	public static final void analyseCodeLevelModelFromJavaSourceFilesEclipse(
-		final String[] someSmells,
-		final String aSourcePath,
-		final String aName,
-		final String anOutputDirectoryName) {
 
-		SmellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(
-			SmellDetectionHelper.SMELLS,
-			new String[] { aSourcePath },
-			new String[] { aSourcePath },
-			aName,
-			anOutputDirectoryName);
+	public final void analyseCodeLevelModelFromJavaSourceFilesEclipse(final String[] someSmells,
+			final String aSourcePath, final String aName, final String anOutputDirectoryName) {
+
+		analyseCodeLevelModelFromJavaSourceFilesEclipse(SmellDetectionHelper.SMELLS, new String[] { aSourcePath },
+				new String[] { aSourcePath }, aName, anOutputDirectoryName);
 	}
-	public static final void analyseCodeLevelModelFromJavaSourceFilesEclipse(
-		final String[] someSmells,
-		final String[] someSourceRootPaths,
-		final String[] someSourceFilePaths,
-		final String aName,
-		final String anOutputDirectoryName) {
+
+	public final void analyseCodeLevelModelFromJavaSourceFilesEclipse(final String[] someSmells,
+			final String[] someSourceRootPaths, final String[] someSourceFilePaths, final String aName,
+			final String anOutputDirectoryName) {
 
 		System.out.print("Analysing ");
 		System.out.print(aName);
 		System.out.println("...");
 
-		//	Output.getInstance().setNormalOutput(new PrintWriter(System.out));
-		//	Output.getInstance().setDebugOutput(new PrintWriter(System.out));
-		//	Output.getInstance().setErrorOutput(new PrintWriter(System.err));
+		// Output.getInstance().setNormalOutput(new PrintWriter(System.out));
+		// Output.getInstance().setDebugOutput(new PrintWriter(System.out));
+		// Output.getInstance().setErrorOutput(new PrintWriter(System.err));
 
 		try {
 			final long startTime = System.currentTimeMillis();
-			final CompleteJavaFileCreator creator =
-				new CompleteJavaFileCreator(
-					someSourceRootPaths,
-					new String[] { "" },
-					someSourceFilePaths);
-			final ICodeLevelModel codeLevelModel =
-				Factory.getInstance().createCodeLevelModel(aName);
+			final CompleteJavaFileCreator creator = new CompleteJavaFileCreator(someSourceRootPaths,
+					new String[] { "" }, someSourceFilePaths);
+			final ICodeLevelModel codeLevelModel = Factory.getInstance().createCodeLevelModel(aName);
 			codeLevelModel.create(creator);
 			final long endTime = System.currentTimeMillis();
 			System.out.print("Model built in ");
@@ -511,82 +363,63 @@ public final class SmellDetectionHelper {
 			System.out.print(codeLevelModel.getNumberOfTopLevelEntities());
 			System.out.println(" top-level entities.");
 
-			//	try {
-			final padl.creator.javafile.eclipse.astVisitors.LOCModelAnnotator annotator2 =
-				new padl.creator.javafile.eclipse.astVisitors.LOCModelAnnotator(
+			// try {
+			final padl.creator.javafile.eclipse.astVisitors.LOCModelAnnotator annotator2 = new padl.creator.javafile.eclipse.astVisitors.LOCModelAnnotator(
 					codeLevelModel);
 			creator.applyAnnotator(annotator2);
-			//	}
-			//	catch (final UnsupportedSourceModelException e) {
-			//		e.printStackTrace();
-			//	}
+			// }
+			// catch (final UnsupportedSourceModelException e) {
+			// e.printStackTrace();
+			// }
 
-			//	try {
-			final padl.creator.javafile.eclipse.astVisitors.ConditionalModelAnnotator annotator1 =
-				new padl.creator.javafile.eclipse.astVisitors.ConditionalModelAnnotator(
+			// try {
+			final padl.creator.javafile.eclipse.astVisitors.ConditionalModelAnnotator annotator1 = new padl.creator.javafile.eclipse.astVisitors.ConditionalModelAnnotator(
 					codeLevelModel);
 			creator.applyAnnotator(annotator1);
-			//	}
-			//	catch (final UnsupportedSourceModelException e) {
-			//		e.printStackTrace();
-			//	}
+			// }
+			// catch (final UnsupportedSourceModelException e) {
+			// e.printStackTrace();
+			// }
 
 			// Create the output directory if needed.
-			final String newOutputDirectoryName =
-				anOutputDirectoryName + aName + File.separatorChar;
+			final String newOutputDirectoryName = anOutputDirectoryName + aName + File.separatorChar;
 
 			// Yann 2013/05/30
 			// Not necessary thanks to ProxyDisk
-			//	final File newOutputDirectiory = new File(newOutputDirectoryName);
-			//	if (!newOutputDirectiory.exists()) {
-			//		newOutputDirectiory.mkdirs();
-			//	}
+			// final File newOutputDirectiory = new
+			// File(newOutputDirectoryName);
+			// if (!newOutputDirectiory.exists()) {
+			// newOutputDirectiory.mkdirs();
+			// }
 
-			SmellDetectionHelper.analyseCodeLevelModel(
-				someSmells,
-				aName,
-				codeLevelModel,
-				newOutputDirectoryName);
-		}
-		catch (final SecurityException e) {
+			analyseCodeLevelModel(someSmells, aName, codeLevelModel, newOutputDirectoryName);
+		} catch (final SecurityException e) {
+			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
+		} catch (final IllegalArgumentException e) {
+			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
+		} catch (final CreationException e) {
 			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
 		}
-		catch (final IllegalArgumentException e) {
-			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		catch (final CreationException e) {
-			e.printStackTrace(ProxyConsole.getInstance().errorOutput());
-		}
-		//	catch (final UnsupportedSourceModelException e) {
-		//		e.printStackTrace(Output.getInstance().errorOutput());
-		//	}
+		// catch (final UnsupportedSourceModelException e) {
+		// e.printStackTrace(Output.getInstance().errorOutput());
+		// }
 	}
 
-	public static void extractClassesDefects(
-		final String anOutputDirectory,
-		final String aName,
-		final IIdiomLevelModel idiomLevelModel,
-		final String codesmellName,
-		final Properties properties,
-		final OccurrenceBuilder solutionBuilder) throws IOException {
+	public static void extractClassesDefects(final String anOutputDirectory, final String aName,
+			final IIdiomLevelModel idiomLevelModel, final String codesmellName, final Properties properties,
+			final OccurrenceBuilder solutionBuilder) throws IOException {
 
-		final String path2 =
-			anOutputDirectory + "Classes Detected in " + aName + " for "
-					+ codesmellName + ".csv";
-		final PrintWriter w =
-			new PrintWriter(ProxyDisk.getInstance().fileTempOutput(path2));
+		final String path2 = anOutputDirectory + "Classes Detected in " + aName + " for " + codesmellName + ".csv";
+		final PrintWriter w = new PrintWriter(ProxyDisk.getInstance().fileTempOutput(path2));
 
-		final Occurrence[] allOccurrences =
-			solutionBuilder.getAllOccurrences(properties);
+		final Occurrence[] allOccurrences = solutionBuilder.getAllOccurrences(properties);
 		final int nbAllOcc = allOccurrences.length;
 		for (int j = 0; j < nbAllOcc; j++) {
 			final Occurrence occ = allOccurrences[j];
 			@SuppressWarnings("unchecked")
-			final List<OccurrenceComponent> listOccComponents =
-				(List<OccurrenceComponent>) occ.getComponents();
+			final List<OccurrenceComponent> listOccComponents = (List<OccurrenceComponent>) occ.getComponents();
 			if (!listOccComponents.isEmpty()) {
-				final OccurrenceComponent solutionComponent =
-					(OccurrenceComponent) listOccComponents.get(0);
+				final OccurrenceComponent solutionComponent = (OccurrenceComponent) listOccComponents.get(0);
 				w.println(new String(solutionComponent.getName()) + ";" + new String(solutionComponent.getValue()));
 			}
 		}
