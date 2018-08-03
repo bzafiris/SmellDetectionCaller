@@ -1,5 +1,6 @@
 CPL/bin/com/	
 CPL/bin/util/
+JavaSmellDetectionCaller/bin
 Java Parser/bin/common/
 Java Parser/bin/parser/
 PADL Creator ClassFile/bin/padl/
@@ -13,4 +14,4 @@ PADL Design Motifs/bin/
 PADL Statements Creator ClassFile/bin/
 PADL Statements/bin/
 POM/bin/
-
+PADL Creator C++ (Eclipse)/bin/
