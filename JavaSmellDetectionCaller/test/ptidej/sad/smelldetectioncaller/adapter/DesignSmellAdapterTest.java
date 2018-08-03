@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,18 +24,31 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 		
 	}
 	
+	@Test
+	public void parseBlobDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("blob.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.BLOB);
+		
+		Assert.assertEquals(19, visitor.getBlobs().size());
+		
+	}
 	
 	@Test
-	public void parseAntisingletonOutput(){
+	public void parseAntisingletonDetectorOutput(){
 		
 		String antisingleton = loadPtidejOutputResource("antisingleton.ini");
 		
-		DesignSmellAdapter adapter = SmellAdapterFactory.getAdapter(DesignSmellAdapter.ANTISINGLETON);
-		adapter.setOccurencesOutput(antisingleton);
-		adapter.accept(visitor);
+		processDetectorOutput(antisingleton, DesignSmellAdapter.ANTISINGLETON);
 		
 		Assert.assertEquals(19, visitor.getAntiSingletons().size());
 		
+	}
+	
+	public void processDetectorOutput(String detectorOutput, String smellType){
+		DesignSmellAdapter adapter = SmellAdapterFactory.getAdapter(smellType);
+		adapter.setOccurencesOutput(detectorOutput);
+		adapter.accept(visitor);
 	}
 	
 	

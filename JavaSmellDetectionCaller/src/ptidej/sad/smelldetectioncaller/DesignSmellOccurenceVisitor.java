@@ -6,6 +6,7 @@ import java.util.Set;
 public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 
 	Set<String> antiSingletons = new HashSet<>();
+	Set<String> blobs = new HashSet<>();
 	
 	@Override
 	public void visitAntiSingleton(String className){
@@ -14,6 +15,12 @@ public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	
 	public Set<String> getAntiSingletons() {
 		return antiSingletons;
+	}
+
+	@Override
+	public void visitLargeClass(String className) {
+		blobs.add(className);
+		
 	}
 		
 }

@@ -10,7 +10,8 @@ public class SmellAdapterFactory {
 
 		case DesignSmellAdapter.ANTISINGLETON:
 			return new AntisingletonAdapter();
-			
+		case DesignSmellAdapter.BLOB:
+			return new BlobAdapter();
 
 		}
 
