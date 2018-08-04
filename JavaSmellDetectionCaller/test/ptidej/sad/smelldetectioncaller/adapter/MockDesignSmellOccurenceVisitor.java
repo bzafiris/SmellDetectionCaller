@@ -25,11 +25,22 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> complexClasses = new HashSet<>();
 	Set<String> classDataShouldBePrivate = new HashSet<>();
 	Set<String> baseClassShouldBeAbstract = new HashSet<>();
+	Set<String> baseClassKnowsDerivedClass = new HashSet<>();
+	Set<String> traditionBreakerClass = new HashSet<>();
 
+	
+	
+	@Override
+	public void visitTraditionBreaker(String className) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	
-	
-	
+	@Override
+	public void visitBaseClassKnowsDerivedClass(String className) {
+		baseClassKnowsDerivedClass.add(className);
+	}
+
 	@Override
 	public void visitBaseClassShouldBeAbstract(String className) {
 		baseClassShouldBeAbstract.add(className);
@@ -192,5 +203,13 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	
 	public Set<String> getBaseClassShouldBeAbstract() {
 		return baseClassShouldBeAbstract;
+	}
+	
+	public Set<String> getBaseClassKnowsDerivedClass() {
+		return baseClassKnowsDerivedClass;
+	}
+	
+	public Set<String> getTraditionBreakerClass() {
+		return traditionBreakerClass;
 	}
 }

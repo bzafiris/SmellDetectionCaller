@@ -123,5 +123,17 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void visitBaseClassKnowsDerivedClass(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitTraditionBreaker(String className) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

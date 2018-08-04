@@ -42,5 +42,9 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitClassDataShouldBePrivate(String className);
 	
 	void visitBaseClassShouldBeAbstract(String className);
+	
+	void visitBaseClassKnowsDerivedClass(String className);
+	
+	void visitTraditionBreaker(String className);
 
 }

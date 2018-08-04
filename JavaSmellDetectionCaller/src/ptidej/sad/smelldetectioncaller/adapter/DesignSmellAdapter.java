@@ -53,8 +53,9 @@ public abstract class DesignSmellAdapter {
 	public static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
 	// done
 	public static final String BLOB = "Blob";
-	
+	// done
 	public static final String BASE_CLASS_SHOULD_BE_ABSTRACT = "BaseClassShouldBeAbstract";
+	// needs testing, not working properly
 	public static final String BASE_CLASS_KNOWS_DERIVED_CLASS = "BaseClassKnowsDerivedClass";
 
 	public abstract String getAntiPatternName();

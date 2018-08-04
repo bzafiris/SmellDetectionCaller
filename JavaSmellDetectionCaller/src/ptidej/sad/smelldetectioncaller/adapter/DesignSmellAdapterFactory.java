@@ -43,6 +43,10 @@ public class DesignSmellAdapterFactory {
 			return new ClassDataShouldBePrivateAdapter();
 		case DesignSmellAdapter.BASE_CLASS_SHOULD_BE_ABSTRACT:
 			return new BaseClassShouldBeAbstractAdapter();
+		case DesignSmellAdapter.BASE_CLASS_KNOWS_DERIVED_CLASS:
+			return new BaseClassKnowsDerivedClassAdapter();
+		case DesignSmellAdapter.TRADITION_BREAKER:
+			return new TraditionBreakerAdapter();
 
 		}
 
