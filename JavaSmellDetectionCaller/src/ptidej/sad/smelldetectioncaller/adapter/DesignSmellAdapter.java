@@ -49,10 +49,11 @@ public abstract class DesignSmellAdapter {
 	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";
 	// done
 	public static final String COMPLEX_CLASS = "ComplexClass";
-	
+	// done
 	public static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
 	// done
 	public static final String BLOB = "Blob";
+	
 	public static final String BASE_CLASS_SHOULD_BE_ABSTRACT = "BaseClassShouldBeAbstract";
 	public static final String BASE_CLASS_KNOWS_DERIVED_CLASS = "BaseClassKnowsDerivedClass";
 

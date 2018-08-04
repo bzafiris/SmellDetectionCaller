@@ -25,6 +25,25 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseBaseClassShouldBeAbstractDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("baseClassShouldBeAbstract.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.BASE_CLASS_SHOULD_BE_ABSTRACT);
+		
+		Assert.assertEquals(38, visitor
+				.getBaseClassShouldBeAbstract()
+				.size());
+		
+		Assert.assertTrue(visitor
+				.getBaseClassShouldBeAbstract()
+				.contains("org.apache.xerces.xinclude.XIncludeTextReader"));
+		Assert.assertTrue(visitor
+				.getBaseClassShouldBeAbstract()
+				.contains("org.apache.xerces.impl.dv.DatatypeException"));
+		
+	}
+	
+	@Test
 	public void parseClassDataShouldBePrivateDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("classDataShouldBePrivate.ini");

@@ -24,10 +24,17 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> functionalDecompositionClasses = new HashSet<>();
 	Set<String> complexClasses = new HashSet<>();
 	Set<String> classDataShouldBePrivate = new HashSet<>();
+	Set<String> baseClassShouldBeAbstract = new HashSet<>();
 
 
 	
 	
+	
+	@Override
+	public void visitBaseClassShouldBeAbstract(String className) {
+		baseClassShouldBeAbstract.add(className);
+	}
+
 	@Override
 	public void visitClassDataShouldBePrivate(String className) {
 		classDataShouldBePrivate.add(className);
@@ -181,5 +188,9 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	
 	public Set<String> getClassDataShouldBePrivate() {
 		return classDataShouldBePrivate;
+	}
+	
+	public Set<String> getBaseClassShouldBeAbstract() {
+		return baseClassShouldBeAbstract;
 	}
 }

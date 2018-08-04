@@ -1,13 +1,11 @@
 package ptidej.sad.smelldetectioncaller.adapter;
- 
+
 /**
  * 
  * @author bzafiris
  *
  */
 public class DesignSmellAdapterFactory {
-
-	
 
 	public static DesignSmellAdapter getAdapter(String antiPatternName) {
 
@@ -43,6 +41,8 @@ public class DesignSmellAdapterFactory {
 			return new ComplexClassAdapter();
 		case DesignSmellAdapter.CLASS_DATA_SHOULD_BE_PRIVATE:
 			return new ClassDataShouldBePrivateAdapter();
+		case DesignSmellAdapter.BASE_CLASS_SHOULD_BE_ABSTRACT:
+			return new BaseClassShouldBeAbstractAdapter();
 
 		}
 
