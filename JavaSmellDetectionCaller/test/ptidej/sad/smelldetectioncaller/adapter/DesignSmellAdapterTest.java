@@ -25,6 +25,23 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseLongParameterListDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("longParameterList.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.LONG_PARAMETER_LIST);
+		
+		Assert.assertEquals(58, visitor.getLongParameterListClasses().size());
+		Assert.assertTrue(visitor
+				.getLongParameterListClasses()
+				.contains("org.jfree.chart.axis.PeriodAxisLabelInfo"));
+		Assert.assertTrue(visitor
+				.getLongParameterListClasses()
+				.contains("org.jfree.chart.renderer.xy.StackedXYAreaRenderer2"));
+		
+		
+	}
+	
+	@Test
 	public void parseManyFieldAttributesButNotComplexDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("manyFieldAttributesButNotComplex.ini");

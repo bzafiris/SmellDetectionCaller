@@ -15,9 +15,15 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> refusedParentBequestClasses = new HashSet<>();
 	Set<String> messageChainsClasses = new HashSet<>();
 	Set<String> manyFieldAttributesButNotComplexClasses = new HashSet<>();
+	Set<String> longParameterListClasses = new HashSet<>();
 
 	
 	
+	@Override
+	public void visitLongParameterListClass(String className) {
+		longParameterListClasses.add(className);
+	}
+
 	@Override
 	public void visitManyFieldAttributesButNotComplex(String className) {
 		manyFieldAttributesButNotComplexClasses.add(className);
@@ -90,5 +96,9 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	
 	public Set<String> getManyFieldAttributesButNotComplexClasses() {
 		return manyFieldAttributesButNotComplexClasses;
+	}
+	
+	public Set<String> getLongParameterListClasses() {
+		return longParameterListClasses;
 	}
 }

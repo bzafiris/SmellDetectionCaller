@@ -22,5 +22,7 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitMessageChains(String className);
 	
 	void visitManyFieldAttributesButNotComplex(String className);
+	
+	void visitLongParameterListClass(String className);
 
 }

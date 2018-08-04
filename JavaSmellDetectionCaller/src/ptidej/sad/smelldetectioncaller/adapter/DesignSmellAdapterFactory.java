@@ -24,6 +24,8 @@ public class DesignSmellAdapterFactory {
 			return new MessageChainsAdapter();
 		case DesignSmellAdapter.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX:
 			return new ManyFieldAttributesButNotComplexAdapter();
+		case DesignSmellAdapter.LONG_PARAMETER_LIST:
+			return new LongParameterListAdapter();
 
 		}
 
