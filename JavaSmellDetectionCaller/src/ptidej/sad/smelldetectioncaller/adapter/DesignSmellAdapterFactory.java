@@ -41,6 +41,8 @@ public class DesignSmellAdapterFactory {
 			return new FunctionalDecompositionAdapter();
 		case DesignSmellAdapter.COMPLEX_CLASS:
 			return new ComplexClassAdapter();
+		case DesignSmellAdapter.CLASS_DATA_SHOULD_BE_PRIVATE:
+			return new ClassDataShouldBePrivateAdapter();
 
 		}
 

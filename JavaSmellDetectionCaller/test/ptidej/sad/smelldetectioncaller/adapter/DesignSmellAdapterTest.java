@@ -25,6 +25,25 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseClassDataShouldBePrivateDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("classDataShouldBePrivate.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.CLASS_DATA_SHOULD_BE_PRIVATE);
+		
+		Assert.assertEquals(4, visitor
+				.getClassDataShouldBePrivate()
+				.size());
+		
+		Assert.assertTrue(visitor
+				.getClassDataShouldBePrivate()
+				.contains("org.jfree.chart.axis.CyclicNumberAxis"));
+		Assert.assertTrue(visitor
+				.getClassDataShouldBePrivate()
+				.contains("org.jfree.chart.ui.Size2D"));
+		
+	}
+	
+	@Test
 	public void parseComplexClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("complexClass.ini");

@@ -111,5 +111,11 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void visitClassDataShouldBePrivate(String className) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
