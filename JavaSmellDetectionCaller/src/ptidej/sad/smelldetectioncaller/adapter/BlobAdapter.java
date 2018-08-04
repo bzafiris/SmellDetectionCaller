@@ -25,11 +25,25 @@ public class BlobAdapter extends DesignSmellAdapter {
 
 		for(Occurrence occurrence: occurrences){
 			List<OccurrenceComponent> components = occurrence.getComponents();
-			
+			boolean ignoreLargeClass = false;
+			boolean ignoreDataClass = false;
+			boolean ignoreLowCohesion = false;
 			for(OccurrenceComponent occurrenceComponent: components){
-				if (occurrenceComponent.getDisplayName().contains("LargeClass")){
-					visitor.visitLargeClass(occurrenceComponent.getDisplayValue());
-					break;
+				if (occurrenceComponent.getDisplayName().contains("LargeClass") && !ignoreLargeClass){
+					visitor.visitBlobClass(occurrenceComponent.getDisplayValue());
+					ignoreLargeClass = true;
+					ignoreDataClass = false;
+					ignoreLowCohesion = false;
+				} else if (occurrenceComponent.getDisplayName().contains("LowCohesion") && !ignoreLowCohesion){
+					visitor.visitLowCohesionClass(occurrenceComponent.getDisplayValue());
+					ignoreLargeClass = false;
+					ignoreDataClass = false;
+					ignoreLowCohesion = true;
+				} else if (occurrenceComponent.getDisplayName().contains("DataClass") && !ignoreDataClass){
+					visitor.visitDataClass(occurrenceComponent.getDisplayValue());
+					ignoreLargeClass = false;
+					ignoreDataClass = true;
+					ignoreLowCohesion = false;
 				}
 			}
 			

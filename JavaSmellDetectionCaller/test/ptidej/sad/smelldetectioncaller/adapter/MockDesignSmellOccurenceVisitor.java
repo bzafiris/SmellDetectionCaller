@@ -9,6 +9,8 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 
 	Set<String> antiSingletons = new HashSet<>();
 	Set<String> blobs = new HashSet<>();
+	Set<String> lowCohesionClasses = new HashSet<>();
+	Set<String> dataClasses = new HashSet<>();
 	Set<String> swissArmyKnives = new HashSet<>();
 	Set<String> speculativeGeneralities = new HashSet<>();
 	Set<String> spaghettiCodeClasses = new HashSet<>();
@@ -18,10 +20,25 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> longParameterListClasses = new HashSet<>();
 	Set<String> longMethodClasses = new HashSet<>();
 	Set<String> lazyClasses = new HashSet<>();
+	Set<String> largeClasses = new HashSet<>();
 
 	
 	
-	
+	@Override
+	public void visitLargeClass(String className) {
+		largeClasses.add(className);
+	}
+
+	@Override
+	public void visitLowCohesionClass(String className) {
+		lowCohesionClasses.add(className);
+	}
+
+	@Override
+	public void visitDataClass(String className) {
+		dataClasses.add(className);
+	}
+
 	@Override
 	public void visitLazyClass(String className) {
 		lazyClasses.add(className);
@@ -31,7 +48,7 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	public void visitLongMethodClass(String className) {
 		longMethodClasses.add(className);
 	}
-	
+
 	@Override
 	public void visitLongParameterListClass(String className) {
 		longParameterListClasses.add(className);
@@ -64,7 +81,7 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	}
 
 	@Override
-	public void visitLargeClass(String className) {
+	public void visitBlobClass(String className) {
 		blobs.add(className);
 
 	}
@@ -102,15 +119,15 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	public Set<String> getRefusedParentBequestClasses() {
 		return refusedParentBequestClasses;
 	}
-	
+
 	public Set<String> getMessageChainsClasses() {
 		return messageChainsClasses;
 	}
-	
+
 	public Set<String> getManyFieldAttributesButNotComplexClasses() {
 		return manyFieldAttributesButNotComplexClasses;
 	}
-	
+
 	public Set<String> getLongParameterListClasses() {
 		return longParameterListClasses;
 	}
@@ -122,5 +139,17 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	public Set<String> getLazyClasses() {
 		return lazyClasses;
 	}
+
+	public Set<String> getLowCohesionClasses() {
+		return lowCohesionClasses;
+	}
+
+	public Set<String> getDataClasses() {
+		return dataClasses;
+	}
 	
+	public Set<String> getLargeClasses() {
+		return largeClasses;
+	}
+
 }

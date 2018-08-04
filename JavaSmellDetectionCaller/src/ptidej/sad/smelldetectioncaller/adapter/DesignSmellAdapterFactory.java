@@ -30,6 +30,8 @@ public class DesignSmellAdapterFactory {
 			return new LongMethodAdapter();
 		case DesignSmellAdapter.LAZY_CLASS:
 			return new LazyClassAdapter();
+		case DesignSmellAdapter.LARGE_CLASS:
+			return new LargeClassAdapter();
 
 		}
 

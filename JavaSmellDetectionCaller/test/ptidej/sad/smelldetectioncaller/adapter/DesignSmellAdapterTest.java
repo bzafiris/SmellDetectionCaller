@@ -25,6 +25,24 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseLazyLargeClassDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("largeClass.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.LARGE_CLASS);
+		
+		Assert.assertEquals(17, visitor
+				.getLargeClasses()
+				.size());
+		Assert.assertTrue(visitor
+				.getLargeClasses()
+				.contains("org.apache.xerces.validators.schema.XSchemaValidator"));
+		Assert.assertTrue(visitor
+				.getLargeClasses()
+				.contains("org.apache.xerces.validators.dtd.DTDValidator"));
+		
+	}
+	
+	@Test
 	public void parseLazyClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("lazyClass.ini");
@@ -159,6 +177,31 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 		processDetectorOutput(detectorOutput, DesignSmellAdapter.BLOB);
 		
 		Assert.assertEquals(8, visitor.getBlobs().size());
+		
+		Assert.assertTrue(visitor
+				.getBlobs()
+				.contains("org.jfree.chart.ChartPanel"));
+		Assert.assertTrue(visitor
+				.getBlobs()
+				.contains("org.jfree.chart.plot.CategoryPlot"));
+		
+		Assert.assertEquals(2, visitor.getLowCohesionClasses().size());
+		
+		Assert.assertTrue(visitor
+				.getLowCohesionClasses()
+				.contains("org.jfree.chart.axis.ValueTick"));
+		Assert.assertTrue(visitor
+				.getLowCohesionClasses()
+				.contains("org.jfree.data.KeyedValueComparator"));
+		
+		Assert.assertEquals(10, visitor.getDataClasses().size());
+		
+		Assert.assertTrue(visitor
+				.getDataClasses()
+				.contains("org.jfree.chart.axis.DateTickMarkPosition"));
+		Assert.assertTrue(visitor
+				.getDataClasses()
+				.contains("org.jfree.chart.axis.TickType"));
 		
 	}
 	

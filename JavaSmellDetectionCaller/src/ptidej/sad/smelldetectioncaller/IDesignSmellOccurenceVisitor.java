@@ -9,7 +9,11 @@ public interface IDesignSmellOccurenceVisitor {
 
 	void visitAntiSingleton(String className);
 	
-	void visitLargeClass(String className);
+	void visitBlobClass(String className);
+	
+	void visitLowCohesionClass(String className);
+	
+	void visitDataClass(String className);
 	
 	void visitSwissArmyKnife(String className);
 	
@@ -28,5 +32,7 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitLongMethodClass(String className);
 	
 	void visitLazyClass(String className);
+	
+	void visitLargeClass(String className);
 
 }

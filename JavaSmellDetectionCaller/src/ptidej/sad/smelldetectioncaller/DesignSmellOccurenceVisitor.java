@@ -18,7 +18,7 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 	}
 
 	@Override
-	public void visitLargeClass(String className) {
+	public void visitBlobClass(String className) {
 		blobs.add(className);
 		
 	}
@@ -73,6 +73,24 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 
 	@Override
 	public void visitLazyClass(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitLowCohesionClass(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitDataClass(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitLargeClass(String className) {
 		// TODO Auto-generated method stub
 		
 	}
