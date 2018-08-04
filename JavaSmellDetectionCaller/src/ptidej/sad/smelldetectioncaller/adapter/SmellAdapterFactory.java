@@ -14,6 +14,8 @@ public class SmellAdapterFactory {
 			return new BlobAdapter();
 		case DesignSmellAdapter.SWISS_ARMY_KNIFE:
 			return new SwissArmyKnifeAdapter();
+		case DesignSmellAdapter.SPECULATIVE_GENERALITY:
+			return new SpeculativeGeneralityAdapter();
 
 		}
 

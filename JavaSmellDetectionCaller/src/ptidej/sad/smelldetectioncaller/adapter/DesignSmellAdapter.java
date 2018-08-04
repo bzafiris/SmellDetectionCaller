@@ -25,6 +25,7 @@ public abstract class DesignSmellAdapter {
 	public static final String ANTISINGLETON = "AntiSingleton";
 	// pending
 	public static final String TRADITION_BREAKER = "TraditionBreaker";
+	// done
 	public static final String SWISS_ARMY_KNIFE = "SwissArmyKnife";
 	public static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
 	public static final String SPAGHETTI_CODE = "SpaghettiCode";

@@ -10,6 +10,7 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	Set<String> antiSingletons = new HashSet<>();
 	Set<String> blobs = new HashSet<>();
 	Set<String> swissArmyKnives = new HashSet<>();
+	Set<String> speculativeGeneralities = new HashSet<>();
 	
 	@Override
 	public void visitAntiSingleton(String className){
@@ -27,6 +28,11 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 		swissArmyKnives.add(className);
 	}
 	
+
+	@Override
+	public void visitSpeculativeGenerality(String className) {
+		speculativeGeneralities.add(className);
+	}
 	
 	public Set<String> getAntiSingletons() {
 		return antiSingletons;
@@ -39,6 +45,11 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	
 	public Set<String> getSwissArmyKnives() {
 		return swissArmyKnives;
+	}
+
+
+	public Set<String> getSpeculativeGeneralities() {
+		return speculativeGeneralities;
 	}
 
 

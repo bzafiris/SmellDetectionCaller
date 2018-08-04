@@ -25,6 +25,17 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseSpeculativeGeneralityDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("speculativeGenerality.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.SPECULATIVE_GENERALITY);
+		
+		Assert.assertEquals(12, visitor.getSpeculativeGeneralities().size());
+		Assert.assertTrue(visitor.getSpeculativeGeneralities().contains("org.eclipse.mylar.internal.tasks.ui.search.SearchResultContentProvider"));
+		
+	}
+	
+	@Test
 	public void parseSwissArmyKnifeDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("swissArmyKnife.ini");

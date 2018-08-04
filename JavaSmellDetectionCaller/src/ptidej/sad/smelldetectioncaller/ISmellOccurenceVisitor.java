@@ -7,5 +7,7 @@ public interface ISmellOccurenceVisitor {
 	void visitLargeClass(String className);
 	
 	void visitSwissArmyKnife(String className);
+	
+	void visitSpeculativeGenerality(String className);
 
 }
