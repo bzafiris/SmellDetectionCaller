@@ -29,7 +29,7 @@ import padl.kernel.IIdiomLevelModel;
 import padl.kernel.exception.CreationException;
 import padl.kernel.impl.Factory;
 import ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapter;
-import ptidej.sad.smelldetectioncaller.adapter.SmellAdapterFactory;
+import ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapterFactory;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceBuilder;
 import ptidej.solver.OccurrenceComponent;
@@ -58,9 +58,9 @@ public final class SmellDetectionHelper {
 			MESSAGE_CHAINS, REFUSED_PARENT_BEQUEST, SPAGHETTI_CODE, SPECULATIVE_GENERALITY, SWISS_ARMY_KNIFE,
 			TRADITION_BREAKER };
 
-	private ISmellOccurenceVisitor smellOccurenceVisitor;
+	private IDesignSmellOccurenceVisitor smellOccurenceVisitor;
 
-	public SmellDetectionHelper(ISmellOccurenceVisitor smellOccurenceVisitor) {
+	public SmellDetectionHelper(IDesignSmellOccurenceVisitor smellOccurenceVisitor) {
 		super();
 		this.smellOccurenceVisitor = smellOccurenceVisitor;
 	}
@@ -74,7 +74,7 @@ public final class SmellDetectionHelper {
 
 				final long startTime = System.currentTimeMillis();
 
-				DesignSmellAdapter designSmellAdapter = SmellAdapterFactory.getAdapter(antipatternName);
+				DesignSmellAdapter designSmellAdapter = DesignSmellAdapterFactory.getAdapter(antipatternName);
 
 				if (designSmellAdapter != null) {
 					designSmellAdapter.detect(idiomLevelModel);

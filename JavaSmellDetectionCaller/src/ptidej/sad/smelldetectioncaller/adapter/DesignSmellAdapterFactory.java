@@ -1,6 +1,6 @@
 package ptidej.sad.smelldetectioncaller.adapter;
  
-public class SmellAdapterFactory {
+public class DesignSmellAdapterFactory {
 
 	
 
@@ -22,6 +22,8 @@ public class SmellAdapterFactory {
 			return new RefusedParentRequestAdapter();
 		case DesignSmellAdapter.MESSAGE_CHAINS:
 			return new MessageChainsAdapter();
+		case DesignSmellAdapter.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX:
+			return new ManyFieldAttributesButNotComplexAdapter();
 
 		}
 

@@ -3,7 +3,7 @@ package ptidej.sad.smelldetectioncaller;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
+public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor {
 
 	Set<String> antiSingletons = new HashSet<>();
 	Set<String> blobs = new HashSet<>();
@@ -49,6 +49,12 @@ public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 
 	@Override
 	public void visitMessageChains(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitManyFieldAttributesButNotComplex(String className) {
 		// TODO Auto-generated method stub
 		
 	}

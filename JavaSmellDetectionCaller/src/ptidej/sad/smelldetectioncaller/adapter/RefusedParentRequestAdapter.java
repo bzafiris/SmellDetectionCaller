@@ -2,7 +2,7 @@ package ptidej.sad.smelldetectioncaller.adapter;
 
 import java.util.List;
 
-import ptidej.sad.smelldetectioncaller.ISmellOccurenceVisitor;
+import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
 
@@ -14,7 +14,7 @@ public class RefusedParentRequestAdapter extends DesignSmellAdapter {
 	}
 
 	@Override
-	protected void processOccurence(ISmellOccurenceVisitor visitor, Occurrence[] occurrences) {
+	protected void processOccurence(IDesignSmellOccurenceVisitor visitor, Occurrence[] occurrences) {
 
 		for (Occurrence occurrence : occurrences) {
 			List<OccurrenceComponent> components = occurrence.getComponents();

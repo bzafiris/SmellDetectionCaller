@@ -3,9 +3,9 @@ package ptidej.sad.smelldetectioncaller.adapter;
 import java.util.HashSet;
 import java.util.Set;
 
-import ptidej.sad.smelldetectioncaller.ISmellOccurenceVisitor;
+import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 
-public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
+public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor {
 
 	Set<String> antiSingletons = new HashSet<>();
 	Set<String> blobs = new HashSet<>();
@@ -14,9 +14,15 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	Set<String> spaghettiCodeClasses = new HashSet<>();
 	Set<String> refusedParentBequestClasses = new HashSet<>();
 	Set<String> messageChainsClasses = new HashSet<>();
+	Set<String> manyFieldAttributesButNotComplexClasses = new HashSet<>();
 
 	
 	
+	@Override
+	public void visitManyFieldAttributesButNotComplex(String className) {
+		manyFieldAttributesButNotComplexClasses.add(className);
+	}
+
 	@Override
 	public void visitMessageChains(String className) {
 		messageChainsClasses.add(className);
@@ -80,5 +86,9 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	
 	public Set<String> getMessageChainsClasses() {
 		return messageChainsClasses;
+	}
+	
+	public Set<String> getManyFieldAttributesButNotComplexClasses() {
+		return manyFieldAttributesButNotComplexClasses;
 	}
 }

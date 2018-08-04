@@ -7,7 +7,7 @@ import java.io.StringWriter;
 import java.util.Properties;
 
 import padl.kernel.IAbstractLevelModel;
-import ptidej.sad.smelldetectioncaller.ISmellOccurenceVisitor;
+import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceBuilder;
 import sad.designsmell.detection.IDesignSmellDetection;
@@ -33,8 +33,9 @@ public abstract class DesignSmellAdapter {
 	public static final String SPAGHETTI_CODE = "SpaghettiCode";
 	// done
 	public static final String REFUSED_PARENT_BEQUEST = "RefusedParentBequest";
-	
+	// done
 	public static final String MESSAGE_CHAINS = "MessageChains";
+	
 	public static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
 	public static final String LONG_PARAMETER_LIST = "LongParameterList";
 	public static final String LONG_METHOD = "LongMethod";
@@ -74,9 +75,9 @@ public abstract class DesignSmellAdapter {
 
 	}
 
-	protected abstract void processOccurence(ISmellOccurenceVisitor visitor, Occurrence[] occurences);
+	protected abstract void processOccurence(IDesignSmellOccurenceVisitor visitor, Occurrence[] occurences);
 
-	public void accept(ISmellOccurenceVisitor visitor) {
+	public void accept(IDesignSmellOccurenceVisitor visitor) {
 
 		if (occurencesOutput == null) {
 			throw new IllegalStateException("Detect not called on DesignSmellAdapter");

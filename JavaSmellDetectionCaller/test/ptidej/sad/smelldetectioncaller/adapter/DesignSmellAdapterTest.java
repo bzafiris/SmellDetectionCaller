@@ -15,12 +15,28 @@ import ptidej.sad.smelldetectioncaller.JavaSmellDetectionCallerTestCase;
 
 public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 
-	MockSmellOccurenceVisitor visitor;
+	MockDesignSmellOccurenceVisitor visitor;
 	
 	@Before
 	public void setup(){
 		
-		visitor = new MockSmellOccurenceVisitor();
+		visitor = new MockDesignSmellOccurenceVisitor();
+		
+	}
+	
+	@Test
+	public void parseManyFieldAttributesButNotComplexDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("manyFieldAttributesButNotComplex.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX);
+		
+		Assert.assertEquals(2, visitor.getManyFieldAttributesButNotComplexClasses().size());
+		Assert.assertTrue(visitor
+				.getManyFieldAttributesButNotComplexClasses()
+				.contains("org.apache.xerces.impl.dv.XSFacets"));
+		Assert.assertTrue(visitor
+				.getManyFieldAttributesButNotComplexClasses()
+				.contains("org.w3c.dom.DOMException"));
 		
 	}
 	
@@ -106,7 +122,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	public void processDetectorOutput(String detectorOutput, String smellType){
-		DesignSmellAdapter adapter = SmellAdapterFactory.getAdapter(smellType);
+		DesignSmellAdapter adapter = DesignSmellAdapterFactory.getAdapter(smellType);
 		adapter.setOccurencesOutput(detectorOutput);
 		adapter.accept(visitor);
 	}

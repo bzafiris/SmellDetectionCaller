@@ -6,11 +6,11 @@ import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
 
-public class SpaghettiCodeAdapter extends DesignSmellAdapter {
+public class ManyFieldAttributesButNotComplexAdapter extends DesignSmellAdapter {
 
 	@Override
 	public String getAntiPatternName() {
-		return SPAGHETTI_CODE;
+		return MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX;
 	}
 
 	@Override
@@ -21,14 +21,12 @@ public class SpaghettiCodeAdapter extends DesignSmellAdapter {
 			List<OccurrenceComponent> components = occurrence.getComponents();
 			
 			for(OccurrenceComponent occurrenceComponent: components){
-				// class that does not inherit, has long methods with no parameters
-				// and utilizes global variables (static variables)
+				// not complex class that declares many attributes and public fields
 				String displayName = occurrenceComponent.getDisplayName();
-				if (displayName.contains("NoInheritance") // whichever appears first
-						|| displayName.contains("ClassGlobalVariable")
-						|| displayName.contains("MethodNoParameter")
-						|| displayName.contains("LongMethod")){
-					visitor.visitSpaghettiCode(occurrenceComponent.getDisplayValue());
+				if (displayName.contains("NotComplex") // whichever appears first
+						|| displayName.contains("FieldPublic")
+						|| displayName.contains("ManyAttributes")){
+					visitor.visitManyFieldAttributesButNotComplex(occurrenceComponent.getDisplayValue());
 					break;
 				}
 			}
