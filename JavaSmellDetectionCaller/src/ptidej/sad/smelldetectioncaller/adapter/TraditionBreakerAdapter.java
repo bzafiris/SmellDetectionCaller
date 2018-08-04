@@ -2,6 +2,7 @@ package ptidej.sad.smelldetectioncaller.adapter;
 
 import java.util.List;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
 import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
@@ -19,7 +20,7 @@ public class TraditionBreakerAdapter extends DesignSmellAdapter {
 
 	@Override
 	public String getAntiPatternName() {
-		return TRADITION_BREAKER;
+		return DesignSmells.TRADITION_BREAKER;
 	}
 
 	@Override
@@ -29,9 +30,8 @@ public class TraditionBreakerAdapter extends DesignSmellAdapter {
 			List<OccurrenceComponent> components = occurrence.getComponents();
 
 			for (OccurrenceComponent occurrenceComponent : components) {
-				// A class that redefines inherited method using empty bodies,
 				String displayName = occurrenceComponent.getDisplayName();
-				// the parent class is ParentClassProvidesProtected
+				// tradition breaker is also a large class
 				if (displayName.contains("LargeClass")) {
 					visitor.visitTraditionBreaker(occurrenceComponent.getDisplayValue());
 					break;

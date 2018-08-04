@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
 import ptidej.sad.smelldetectioncaller.JavaSmellDetectionCallerTestCase;
 
 public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
@@ -28,7 +29,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseBaseClassShouldBeAbstractDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("baseClassShouldBeAbstract.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.BASE_CLASS_SHOULD_BE_ABSTRACT);
+		processDetectorOutput(detectorOutput, DesignSmells.BASE_CLASS_SHOULD_BE_ABSTRACT);
 		
 		Assert.assertEquals(38, visitor
 				.getBaseClassShouldBeAbstract()
@@ -47,7 +48,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseClassDataShouldBePrivateDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("classDataShouldBePrivate.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.CLASS_DATA_SHOULD_BE_PRIVATE);
+		processDetectorOutput(detectorOutput, DesignSmells.CLASS_DATA_SHOULD_BE_PRIVATE);
 		
 		Assert.assertEquals(4, visitor
 				.getClassDataShouldBePrivate()
@@ -66,7 +67,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseComplexClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("complexClass.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.COMPLEX_CLASS);
+		processDetectorOutput(detectorOutput, DesignSmells.COMPLEX_CLASS);
 		
 		Assert.assertEquals(3, visitor
 				.getComplexClasses()
@@ -89,7 +90,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseFunctionalDecompositionDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("functionalDecomposition.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.FUNCTIONAL_DECOMPOSITION);
+		processDetectorOutput(detectorOutput, DesignSmells.FUNCTIONAL_DECOMPOSITION);
 		
 		Assert.assertEquals(19, visitor
 				.getFunctionalDecompositionClasses()
@@ -110,7 +111,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseLazyLargeClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("largeClass.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.LARGE_CLASS);
+		processDetectorOutput(detectorOutput, DesignSmells.LARGE_CLASS);
 		
 		Assert.assertEquals(17, visitor
 				.getLargeClasses()
@@ -128,7 +129,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseLazyClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("lazyClass.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.LAZY_CLASS);
+		processDetectorOutput(detectorOutput, DesignSmells.LAZY_CLASS);
 		
 		Assert.assertEquals(22, visitor
 				.getLazyClasses()
@@ -146,7 +147,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseLongMethodDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("longMethod.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.LONG_METHOD);
+		processDetectorOutput(detectorOutput, DesignSmells.LONG_METHOD);
 		
 		Assert.assertEquals(122, visitor.getLongMethodClasses().size());
 		Assert.assertTrue(visitor
@@ -163,7 +164,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseLongParameterListDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("longParameterList.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.LONG_PARAMETER_LIST);
+		processDetectorOutput(detectorOutput, DesignSmells.LONG_PARAMETER_LIST);
 		
 		Assert.assertEquals(58, visitor.getLongParameterListClasses().size());
 		Assert.assertTrue(visitor
@@ -180,7 +181,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseManyFieldAttributesButNotComplexDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("manyFieldAttributesButNotComplex.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX);
+		processDetectorOutput(detectorOutput, DesignSmells.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX);
 		
 		Assert.assertEquals(2, visitor.getManyFieldAttributesButNotComplexClasses().size());
 		Assert.assertTrue(visitor
@@ -196,7 +197,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseMessageChainsDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("messageChains.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.MESSAGE_CHAINS);
+		processDetectorOutput(detectorOutput, DesignSmells.MESSAGE_CHAINS);
 		
 		Assert.assertEquals(9, visitor.getMessageChainsClasses().size());
 		Assert.assertTrue(visitor
@@ -209,7 +210,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseRefusedParentBequestDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("refusedParentBequest.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.REFUSED_PARENT_BEQUEST);
+		processDetectorOutput(detectorOutput, DesignSmells.REFUSED_PARENT_BEQUEST);
 		
 		Assert.assertEquals(13, visitor.getRefusedParentBequestClasses().size());
 		Assert.assertTrue(visitor
@@ -222,7 +223,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseSpaghettiCodeDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("spaghettiCode.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.SPAGHETTI_CODE);
+		processDetectorOutput(detectorOutput, DesignSmells.SPAGHETTI_CODE);
 		
 		Assert.assertEquals(3, visitor.getSpaghettiCodeClasses().size());
 		Assert.assertTrue(visitor.getSpaghettiCodeClasses().contains("org.argouml.ui.targetmanager.TargetManager"));
@@ -233,7 +234,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseSpeculativeGeneralityDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("speculativeGenerality.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.SPECULATIVE_GENERALITY);
+		processDetectorOutput(detectorOutput, DesignSmells.SPECULATIVE_GENERALITY);
 		
 		Assert.assertEquals(12, visitor.getSpeculativeGeneralities().size());
 		Assert.assertTrue(visitor.getSpeculativeGeneralities().contains("org.eclipse.mylar.internal.tasks.ui.search.SearchResultContentProvider"));
@@ -245,7 +246,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseSwissArmyKnifeDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("swissArmyKnife.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.SWISS_ARMY_KNIFE);
+		processDetectorOutput(detectorOutput, DesignSmells.SWISS_ARMY_KNIFE);
 		
 		Assert.assertEquals(30, visitor.getSwissArmyKnives().size());
 		Assert.assertTrue(visitor.getSwissArmyKnives().contains("org.gudy.azureus2.pluginsimpl.local.sharing.test.ShareTester"));
@@ -256,7 +257,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	public void parseBlobDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("blob.ini");
-		processDetectorOutput(detectorOutput, DesignSmellAdapter.BLOB);
+		processDetectorOutput(detectorOutput, DesignSmells.BLOB);
 		
 		Assert.assertEquals(8, visitor.getBlobs().size());
 		
@@ -292,7 +293,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 		
 		String antisingleton = loadPtidejOutputResource("antisingleton.ini");
 		
-		processDetectorOutput(antisingleton, DesignSmellAdapter.ANTISINGLETON);
+		processDetectorOutput(antisingleton, DesignSmells.ANTISINGLETON);
 		
 		Assert.assertEquals(19, visitor.getAntiSingletons().size());
 		

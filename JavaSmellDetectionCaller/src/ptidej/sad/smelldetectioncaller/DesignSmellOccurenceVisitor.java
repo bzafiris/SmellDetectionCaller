@@ -1,7 +1,8 @@
 package ptidej.sad.smelldetectioncaller;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+import static ptidej.sad.smelldetectioncaller.DesignSmells.*;
 
 /**
  * 
@@ -10,130 +11,116 @@ import java.util.Set;
  */
 public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor {
 
-	Set<String> antiSingletons = new HashSet<>();
-	Set<String> blobs = new HashSet<>();
-	
+	Map<String, DesignSmellOccurrenceSummary> designSmellOccurrencesPerClass = new HashMap<>();
+
 	@Override
-	public void visitAntiSingleton(String className){
-		antiSingletons.add(className);
-	}
-	
-	public Set<String> getAntiSingletons() {
-		return antiSingletons;
+	public void visitAntiSingleton(String className) {
+		setSingleSmellOccurrence(className, ANTISINGLETON);
 	}
 
 	@Override
 	public void visitBlobClass(String className) {
-		blobs.add(className);
-		
+		setSingleSmellOccurrence(className, BLOB);
 	}
 
 	@Override
 	public void visitSwissArmyKnife(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, SWISS_ARMY_KNIFE);
 	}
 
 	@Override
 	public void visitSpeculativeGenerality(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, SPECULATIVE_GENERALITY);
 	}
 
 	@Override
 	public void visitSpaghettiCode(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, SPAGHETTI_CODE);
 	}
 
 	@Override
 	public void visitRefusedParentRequest(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, REFUSED_PARENT_BEQUEST);
 	}
 
 	@Override
 	public void visitMessageChains(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, MESSAGE_CHAINS);
 	}
 
 	@Override
 	public void visitManyFieldAttributesButNotComplex(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX);
 	}
 
 	@Override
 	public void visitLongParameterListClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, LONG_PARAMETER_LIST);
 	}
 
 	@Override
 	public void visitLongMethodClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, LONG_METHOD);
 	}
 
 	@Override
 	public void visitLazyClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, LAZY_CLASS);
 	}
 
 	@Override
 	public void visitLowCohesionClass(String className) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visitDataClass(String className) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void visitLargeClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, LARGE_CLASS);
 	}
 
 	@Override
 	public void visitFunctionalDecomposition(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, FUNCTIONAL_DECOMPOSITION);
 	}
 
 	@Override
 	public void visitComplexClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, COMPLEX_CLASS);
 	}
 
 	@Override
 	public void visitClassDataShouldBePrivate(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, CLASS_DATA_SHOULD_BE_PRIVATE);
 	}
 
 	@Override
 	public void visitBaseClassShouldBeAbstract(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, BASE_CLASS_SHOULD_BE_ABSTRACT);
+
 	}
 
 	@Override
 	public void visitBaseClassKnowsDerivedClass(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, BASE_CLASS_KNOWS_DERIVED_CLASS);
 	}
 
 	@Override
 	public void visitTraditionBreaker(String className) {
-		// TODO Auto-generated method stub
-		
+		setSingleSmellOccurrence(className, TRADITION_BREAKER);
 	}
-		
+	
+	
+	private void setSingleSmellOccurrence(String className, String smell) {
+		DesignSmellOccurrenceSummary occurrenceSummary = designSmellOccurrencesPerClass.get(className);
+		occurrenceSummary.setSingleSmellOccurrence(smell);
+	}
+	
+	public Map<String, DesignSmellOccurrenceSummary> getDesignSmellOccurrencesPerClass() {
+		return designSmellOccurrencesPerClass;
+	}
+
 }

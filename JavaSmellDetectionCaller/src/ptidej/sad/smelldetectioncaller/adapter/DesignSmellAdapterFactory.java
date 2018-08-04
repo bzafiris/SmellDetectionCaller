@@ -1,5 +1,7 @@
 package ptidej.sad.smelldetectioncaller.adapter;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
+
 /**
  * 
  * @author bzafiris
@@ -11,41 +13,41 @@ public class DesignSmellAdapterFactory {
 
 		switch (antiPatternName) {
 
-		case DesignSmellAdapter.ANTISINGLETON:
+		case DesignSmells.ANTISINGLETON:
 			return new AntisingletonAdapter();
-		case DesignSmellAdapter.BLOB:
+		case DesignSmells.BLOB:
 			return new BlobAdapter();
-		case DesignSmellAdapter.SWISS_ARMY_KNIFE:
+		case DesignSmells.SWISS_ARMY_KNIFE:
 			return new SwissArmyKnifeAdapter();
-		case DesignSmellAdapter.SPECULATIVE_GENERALITY:
+		case DesignSmells.SPECULATIVE_GENERALITY:
 			return new SpeculativeGeneralityAdapter();
-		case DesignSmellAdapter.SPAGHETTI_CODE:
+		case DesignSmells.SPAGHETTI_CODE:
 			return new SpaghettiCodeAdapter();
-		case DesignSmellAdapter.REFUSED_PARENT_BEQUEST:
+		case DesignSmells.REFUSED_PARENT_BEQUEST:
 			return new RefusedParentRequestAdapter();
-		case DesignSmellAdapter.MESSAGE_CHAINS:
+		case DesignSmells.MESSAGE_CHAINS:
 			return new MessageChainsAdapter();
-		case DesignSmellAdapter.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX:
+		case DesignSmells.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX:
 			return new ManyFieldAttributesButNotComplexAdapter();
-		case DesignSmellAdapter.LONG_PARAMETER_LIST:
+		case DesignSmells.LONG_PARAMETER_LIST:
 			return new LongParameterListAdapter();
-		case DesignSmellAdapter.LONG_METHOD:
+		case DesignSmells.LONG_METHOD:
 			return new LongMethodAdapter();
-		case DesignSmellAdapter.LAZY_CLASS:
+		case DesignSmells.LAZY_CLASS:
 			return new LazyClassAdapter();
-		case DesignSmellAdapter.LARGE_CLASS:
+		case DesignSmells.LARGE_CLASS:
 			return new LargeClassAdapter();
-		case DesignSmellAdapter.FUNCTIONAL_DECOMPOSITION:
+		case DesignSmells.FUNCTIONAL_DECOMPOSITION:
 			return new FunctionalDecompositionAdapter();
-		case DesignSmellAdapter.COMPLEX_CLASS:
+		case DesignSmells.COMPLEX_CLASS:
 			return new ComplexClassAdapter();
-		case DesignSmellAdapter.CLASS_DATA_SHOULD_BE_PRIVATE:
+		case DesignSmells.CLASS_DATA_SHOULD_BE_PRIVATE:
 			return new ClassDataShouldBePrivateAdapter();
-		case DesignSmellAdapter.BASE_CLASS_SHOULD_BE_ABSTRACT:
+		case DesignSmells.BASE_CLASS_SHOULD_BE_ABSTRACT:
 			return new BaseClassShouldBeAbstractAdapter();
-		case DesignSmellAdapter.BASE_CLASS_KNOWS_DERIVED_CLASS:
+		case DesignSmells.BASE_CLASS_KNOWS_DERIVED_CLASS:
 			return new BaseClassKnowsDerivedClassAdapter();
-		case DesignSmellAdapter.TRADITION_BREAKER:
+		case DesignSmells.TRADITION_BREAKER:
 			return new TraditionBreakerAdapter();
 
 		}

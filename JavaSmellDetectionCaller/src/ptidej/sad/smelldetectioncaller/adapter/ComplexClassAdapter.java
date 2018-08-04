@@ -2,6 +2,7 @@ package ptidej.sad.smelldetectioncaller.adapter;
 
 import java.util.List;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
 import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
@@ -15,7 +16,7 @@ public class ComplexClassAdapter extends DesignSmellAdapter {
 
 	@Override
 	public String getAntiPatternName() {
-		return COMPLEX_CLASS;
+		return DesignSmells.COMPLEX_CLASS;
 	}
 
 	@Override

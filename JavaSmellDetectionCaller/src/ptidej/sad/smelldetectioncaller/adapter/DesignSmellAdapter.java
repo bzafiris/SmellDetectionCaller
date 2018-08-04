@@ -21,43 +21,6 @@ import util.io.ReaderInputStream;
  */
 public abstract class DesignSmellAdapter {
 
-	// done
-	public static final String ANTISINGLETON = "AntiSingleton";
-	// pending
-	public static final String TRADITION_BREAKER = "TraditionBreaker";
-	// done
-	public static final String SWISS_ARMY_KNIFE = "SwissArmyKnife";
-	// done
-	public static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
-	// done
-	public static final String SPAGHETTI_CODE = "SpaghettiCode";
-	// done
-	public static final String REFUSED_PARENT_BEQUEST = "RefusedParentBequest";
-	// done
-	public static final String MESSAGE_CHAINS = "MessageChains";
-	// done
-	public static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
-	// done
-	public static final String LONG_PARAMETER_LIST = "LongParameterList";
-	// done
-	public static final String LONG_METHOD = "LongMethod";
-	// done
-	public static final String LAZY_CLASS = "LazyClass";
-	// done
-	public static final String LARGE_CLASS = "LargeClass";
-	// done
-	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";
-	// done
-	public static final String COMPLEX_CLASS = "ComplexClass";
-	// done
-	public static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
-	// done
-	public static final String BLOB = "Blob";
-	// done
-	public static final String BASE_CLASS_SHOULD_BE_ABSTRACT = "BaseClassShouldBeAbstract";
-	// needs testing, not working properly
-	public static final String BASE_CLASS_KNOWS_DERIVED_CLASS = "BaseClassKnowsDerivedClass";
-
 	public abstract String getAntiPatternName();
 
 	private IDesignSmellDetection detection;

@@ -2,6 +2,7 @@ package ptidej.sad.smelldetectioncaller.adapter;
 
 import java.util.List;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
 import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
@@ -15,7 +16,7 @@ public class ManyFieldAttributesButNotComplexAdapter extends DesignSmellAdapter 
 
 	@Override
 	public String getAntiPatternName() {
-		return MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX;
+		return DesignSmells.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX;
 	}
 
 	@Override

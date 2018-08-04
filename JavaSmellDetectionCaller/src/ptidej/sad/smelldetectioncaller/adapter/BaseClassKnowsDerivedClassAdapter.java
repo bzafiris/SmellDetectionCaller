@@ -2,6 +2,7 @@ package ptidej.sad.smelldetectioncaller.adapter;
 
 import java.util.List;
 
+import ptidej.sad.smelldetectioncaller.DesignSmells;
 import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
@@ -18,7 +19,7 @@ public class BaseClassKnowsDerivedClassAdapter extends DesignSmellAdapter {
 
 	@Override
 	public String getAntiPatternName() {
-		return BASE_CLASS_KNOWS_DERIVED_CLASS;
+		return DesignSmells.BASE_CLASS_KNOWS_DERIVED_CLASS;
 	}
 
 	@Override
