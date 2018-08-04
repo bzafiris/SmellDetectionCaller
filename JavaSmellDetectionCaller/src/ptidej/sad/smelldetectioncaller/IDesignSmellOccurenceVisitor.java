@@ -24,5 +24,7 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitManyFieldAttributesButNotComplex(String className);
 	
 	void visitLongParameterListClass(String className);
+	
+	void visitLongMethodClass(String className);
 
 }

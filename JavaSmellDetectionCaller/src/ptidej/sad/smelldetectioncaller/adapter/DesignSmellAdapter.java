@@ -37,7 +37,7 @@ public abstract class DesignSmellAdapter {
 	public static final String MESSAGE_CHAINS = "MessageChains";
 	// done
 	public static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
-	
+	// done
 	public static final String LONG_PARAMETER_LIST = "LongParameterList";
 	public static final String LONG_METHOD = "LongMethod";
 	public static final String LAZY_CLASS = "LazyClass";

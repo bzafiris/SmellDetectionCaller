@@ -25,6 +25,23 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseLongMethodDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("longMethod.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.LONG_METHOD);
+		
+		Assert.assertEquals(122, visitor.getLongMethodClasses().size());
+		Assert.assertTrue(visitor
+				.getLongMethodClasses()
+				.contains("org.jfree.chart.plot.CombinedRangeXYPlot"));
+		Assert.assertTrue(visitor
+				.getLongMethodClasses()
+				.contains("org.jfree.chart.renderer.category.GanttRenderer"));
+		
+	}
+	
+	
+	@Test
 	public void parseLongParameterListDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("longParameterList.ini");
