@@ -12,48 +12,51 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	Set<String> swissArmyKnives = new HashSet<>();
 	Set<String> speculativeGeneralities = new HashSet<>();
 	Set<String> spaghettiCodeClasses = new HashSet<>();
+	Set<String> refusedParentBequestClasses = new HashSet<>();
+
+	@Override
+	public void visitRefusedParentRequest(String className) {
+		refusedParentBequestClasses.add(className);
+	}
 
 	@Override
 	public void visitSpaghettiCode(String className) {
 		spaghettiCodeClasses.add(className);
-		
+
 	}
-	
+
 	@Override
-	public void visitAntiSingleton(String className){
+	public void visitAntiSingleton(String className) {
 		antiSingletons.add(className);
 	}
-	
+
 	@Override
 	public void visitLargeClass(String className) {
 		blobs.add(className);
-		
+
 	}
 
 	@Override
 	public void visitSwissArmyKnife(String className) {
 		swissArmyKnives.add(className);
 	}
-	
 
 	@Override
 	public void visitSpeculativeGenerality(String className) {
 		speculativeGeneralities.add(className);
 	}
-	
+
 	public Set<String> getAntiSingletons() {
 		return antiSingletons;
 	}
 
-	
 	public Set<String> getBlobs() {
 		return blobs;
 	}
-	
+
 	public Set<String> getSwissArmyKnives() {
 		return swissArmyKnives;
 	}
-
 
 	public Set<String> getSpeculativeGeneralities() {
 		return speculativeGeneralities;
@@ -63,7 +66,7 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 		return spaghettiCodeClasses;
 	}
 
-
-
-	
+	public Set<String> getRefusedParentBequestClasses() {
+		return refusedParentBequestClasses;
+	}
 }

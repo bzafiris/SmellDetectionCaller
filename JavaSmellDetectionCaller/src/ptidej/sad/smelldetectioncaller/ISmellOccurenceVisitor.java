@@ -11,5 +11,7 @@ public interface ISmellOccurenceVisitor {
 	void visitSpeculativeGenerality(String className);
 	
 	void visitSpaghettiCode(String className);
+	
+	void visitRefusedParentRequest(String className);
 
 }

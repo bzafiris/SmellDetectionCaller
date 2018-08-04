@@ -29,6 +29,7 @@ public abstract class DesignSmellAdapter {
 	public static final String SWISS_ARMY_KNIFE = "SwissArmyKnife";
 	// done
 	public static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
+	// done
 	public static final String SPAGHETTI_CODE = "SpaghettiCode";
 	public static final String REFUSED_PARENT_BEQUEST = "RefusedParentBequest";
 	public static final String MESSAGE_CHAINS = "MessageChains";

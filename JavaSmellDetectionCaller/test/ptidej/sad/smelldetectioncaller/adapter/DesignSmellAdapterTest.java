@@ -25,6 +25,19 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseRefusedParentBequestDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("refusedParentBequest.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.REFUSED_PARENT_BEQUEST);
+		
+		Assert.assertEquals(13, visitor.getRefusedParentBequestClasses().size());
+		Assert.assertTrue(visitor
+				.getRefusedParentBequestClasses()
+				.contains("org.jfree.chart.entity.CategoryLabelEntity"));
+		
+	}
+	
+	@Test
 	public void parseSpaghettiCodeDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("spaghettiCode.ini");

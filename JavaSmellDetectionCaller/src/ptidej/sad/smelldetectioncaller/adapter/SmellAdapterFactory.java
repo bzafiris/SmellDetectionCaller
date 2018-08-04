@@ -18,6 +18,8 @@ public class SmellAdapterFactory {
 			return new SpeculativeGeneralityAdapter();
 		case DesignSmellAdapter.SPAGHETTI_CODE:
 			return new SpaghettiCodeAdapter();
+		case DesignSmellAdapter.REFUSED_PARENT_BEQUEST:
+			return new RefusedParentRequestAdapter();
 
 		}
 
