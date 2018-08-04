@@ -25,6 +25,19 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseMessageChainsDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("messageChains.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.MESSAGE_CHAINS);
+		
+		Assert.assertEquals(9, visitor.getMessageChainsClasses().size());
+		Assert.assertTrue(visitor
+				.getMessageChainsClasses()
+				.contains("demo.SurveyResultsDemo1"));
+		
+	}
+	
+	@Test
 	public void parseRefusedParentBequestDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("refusedParentBequest.ini");

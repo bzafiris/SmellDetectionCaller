@@ -20,6 +20,8 @@ public class SmellAdapterFactory {
 			return new SpaghettiCodeAdapter();
 		case DesignSmellAdapter.REFUSED_PARENT_BEQUEST:
 			return new RefusedParentRequestAdapter();
+		case DesignSmellAdapter.MESSAGE_CHAINS:
+			return new MessageChainsAdapter();
 
 		}
 

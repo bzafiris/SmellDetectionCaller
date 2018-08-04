@@ -46,5 +46,11 @@ public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void visitMessageChains(String className) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

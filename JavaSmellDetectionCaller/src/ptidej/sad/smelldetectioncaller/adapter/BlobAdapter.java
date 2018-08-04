@@ -6,6 +6,11 @@ import ptidej.sad.smelldetectioncaller.ISmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
 
+/**
+ * 
+ * @author bzafiris
+ *
+ */
 public class BlobAdapter extends DesignSmellAdapter {
 
 	@Override

@@ -13,6 +13,14 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	Set<String> speculativeGeneralities = new HashSet<>();
 	Set<String> spaghettiCodeClasses = new HashSet<>();
 	Set<String> refusedParentBequestClasses = new HashSet<>();
+	Set<String> messageChainsClasses = new HashSet<>();
+
+	
+	
+	@Override
+	public void visitMessageChains(String className) {
+		messageChainsClasses.add(className);
+	}
 
 	@Override
 	public void visitRefusedParentRequest(String className) {
@@ -68,5 +76,9 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 
 	public Set<String> getRefusedParentBequestClasses() {
 		return refusedParentBequestClasses;
+	}
+	
+	public Set<String> getMessageChainsClasses() {
+		return messageChainsClasses;
 	}
 }

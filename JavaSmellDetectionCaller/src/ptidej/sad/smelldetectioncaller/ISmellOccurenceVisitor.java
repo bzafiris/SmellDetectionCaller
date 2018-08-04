@@ -1,5 +1,10 @@
 package ptidej.sad.smelldetectioncaller;
 
+/**
+ * 
+ * @author bzafiris
+ *
+ */
 public interface ISmellOccurenceVisitor {
 
 	void visitAntiSingleton(String className);
@@ -13,5 +18,7 @@ public interface ISmellOccurenceVisitor {
 	void visitSpaghettiCode(String className);
 	
 	void visitRefusedParentRequest(String className);
+	
+	void visitMessageChains(String className);
 
 }

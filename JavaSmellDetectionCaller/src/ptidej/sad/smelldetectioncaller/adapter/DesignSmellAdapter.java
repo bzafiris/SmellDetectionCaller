@@ -31,7 +31,9 @@ public abstract class DesignSmellAdapter {
 	public static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
 	// done
 	public static final String SPAGHETTI_CODE = "SpaghettiCode";
+	// done
 	public static final String REFUSED_PARENT_BEQUEST = "RefusedParentBequest";
+	
 	public static final String MESSAGE_CHAINS = "MessageChains";
 	public static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
 	public static final String LONG_PARAMETER_LIST = "LongParameterList";
