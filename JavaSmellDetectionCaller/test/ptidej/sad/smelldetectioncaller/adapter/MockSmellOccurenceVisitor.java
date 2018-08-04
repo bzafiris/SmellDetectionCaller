@@ -11,6 +11,13 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	Set<String> blobs = new HashSet<>();
 	Set<String> swissArmyKnives = new HashSet<>();
 	Set<String> speculativeGeneralities = new HashSet<>();
+	Set<String> spaghettiCodeClasses = new HashSet<>();
+
+	@Override
+	public void visitSpaghettiCode(String className) {
+		spaghettiCodeClasses.add(className);
+		
+	}
 	
 	@Override
 	public void visitAntiSingleton(String className){
@@ -51,6 +58,11 @@ public class MockSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 	public Set<String> getSpeculativeGeneralities() {
 		return speculativeGeneralities;
 	}
+
+	public Set<String> getSpaghettiCodeClasses() {
+		return spaghettiCodeClasses;
+	}
+
 
 
 	

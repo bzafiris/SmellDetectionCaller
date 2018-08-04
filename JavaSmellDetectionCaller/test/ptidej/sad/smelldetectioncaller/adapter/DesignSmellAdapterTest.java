@@ -25,6 +25,17 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseSpaghettiCodeDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("spaghettiCode.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.SPAGHETTI_CODE);
+		
+		Assert.assertEquals(3, visitor.getSpaghettiCodeClasses().size());
+		Assert.assertTrue(visitor.getSpaghettiCodeClasses().contains("org.argouml.ui.targetmanager.TargetManager"));
+		
+	}
+	
+	@Test
 	public void parseSpeculativeGeneralityDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("speculativeGenerality.ini");
@@ -34,6 +45,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 		Assert.assertTrue(visitor.getSpeculativeGeneralities().contains("org.eclipse.mylar.internal.tasks.ui.search.SearchResultContentProvider"));
 		
 	}
+	
 	
 	@Test
 	public void parseSwissArmyKnifeDetectorOutput(){

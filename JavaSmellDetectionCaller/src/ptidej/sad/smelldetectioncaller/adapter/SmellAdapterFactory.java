@@ -16,6 +16,8 @@ public class SmellAdapterFactory {
 			return new SwissArmyKnifeAdapter();
 		case DesignSmellAdapter.SPECULATIVE_GENERALITY:
 			return new SpeculativeGeneralityAdapter();
+		case DesignSmellAdapter.SPAGHETTI_CODE:
+			return new SpaghettiCodeAdapter();
 
 		}
 

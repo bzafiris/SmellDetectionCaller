@@ -9,5 +9,7 @@ public interface ISmellOccurenceVisitor {
 	void visitSwissArmyKnife(String className);
 	
 	void visitSpeculativeGenerality(String className);
+	
+	void visitSpaghettiCode(String className);
 
 }
