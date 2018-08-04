@@ -45,9 +45,11 @@ public abstract class DesignSmellAdapter {
 	public static final String LAZY_CLASS = "LazyClass";
 	// done
 	public static final String LARGE_CLASS = "LargeClass";
-	
+	// done
 	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";
+	
 	public static final String COMPLEX_CLASS = "ComplexClass";
+	
 	public static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
 	// done
 	public static final String BLOB = "Blob";

@@ -6,6 +6,11 @@ import ptidej.sad.smelldetectioncaller.IDesignSmellOccurenceVisitor;
 import ptidej.solver.Occurrence;
 import ptidej.solver.OccurrenceComponent;
 
+/**
+ * 
+ * @author bzafiris
+ *
+ */
 public class SpeculativeGeneralityAdapter extends DesignSmellAdapter {
 
 	@Override

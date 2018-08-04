@@ -1,5 +1,10 @@
 package ptidej.sad.smelldetectioncaller.adapter;
  
+/**
+ * 
+ * @author bzafiris
+ *
+ */
 public class DesignSmellAdapterFactory {
 
 	
@@ -34,6 +39,8 @@ public class DesignSmellAdapterFactory {
 			return new LargeClassAdapter();
 		case DesignSmellAdapter.FUNCTIONAL_DECOMPOSITION:
 			return new FunctionalDecompositionAdapter();
+		case DesignSmellAdapter.COMPLEX_CLASS:
+			return new ComplexClassAdapter();
 
 		}
 

@@ -36,5 +36,7 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitLargeClass(String className);
 	
 	void visitFunctionalDecomposition(String className);
+	
+	void visitComplexClass(String className);
 
 }

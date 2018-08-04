@@ -3,6 +3,11 @@ package ptidej.sad.smelldetectioncaller;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 
+ * @author bzafiris
+ *
+ */
 public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor {
 
 	Set<String> antiSingletons = new HashSet<>();
@@ -97,6 +102,12 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 
 	@Override
 	public void visitFunctionalDecomposition(String className) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visitComplexClass(String className) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -25,6 +25,29 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseComplexClassDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("complexClass.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.COMPLEX_CLASS);
+		
+		Assert.assertEquals(3, visitor
+				.getComplexClasses()
+				.size());
+		
+		Assert.assertEquals(3, visitor
+				.getLargeClasses()
+				.size());
+		
+		Assert.assertTrue(visitor
+				.getComplexClasses()
+				.contains("org.jfree.chart.plot.Plot"));
+		Assert.assertTrue(visitor
+				.getLargeClasses()
+				.contains("org.jfree.chart.renderer.xy.XYLineAndShapeRenderer"));
+		
+	}
+	
+	@Test
 	public void parseFunctionalDecompositionDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("functionalDecomposition.ini");

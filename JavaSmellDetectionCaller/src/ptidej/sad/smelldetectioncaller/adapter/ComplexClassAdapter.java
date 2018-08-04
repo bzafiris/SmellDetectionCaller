@@ -11,11 +11,11 @@ import ptidej.solver.OccurrenceComponent;
  * @author bzafiris
  *
  */
-public class LargeClassAdapter extends DesignSmellAdapter {
+public class ComplexClassAdapter extends DesignSmellAdapter {
 
 	@Override
 	public String getAntiPatternName() {
-		return LARGE_CLASS;
+		return COMPLEX_CLASS;
 	}
 
 	@Override
@@ -25,10 +25,12 @@ public class LargeClassAdapter extends DesignSmellAdapter {
 			List<OccurrenceComponent> components = occurrence.getComponents();
 
 			for (OccurrenceComponent occurrenceComponent : components) {
-				// A class that redefines inherited method using empty bodies,
 				String displayName = occurrenceComponent.getDisplayName();
-				// the parent class is ParentClassProvidesProtected
-				if (displayName.contains("LargeClass")) {
+				// Large classes are also regarded as complex classes
+				if (displayName.contains("ComplexClassOnly")) {
+					visitor.visitComplexClass(occurrenceComponent.getDisplayValue());
+					break;
+				} else if (displayName.contains("LargeClassOnly")){
 					visitor.visitLargeClass(occurrenceComponent.getDisplayValue());
 					break;
 				}
