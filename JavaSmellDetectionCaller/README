@@ -1,0 +1,6 @@
+You can run the project from command line by following 
+the instructions of "0-SmellDetectionCaller" project.
+
+An executable bundle can be created by packaging the following jars from "0-SmellDetectionCaller" 
+Ptidej.jar
+Ptidej_lib
