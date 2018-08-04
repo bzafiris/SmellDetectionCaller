@@ -25,6 +25,24 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseLazyClassDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("lazyClass.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.LAZY_CLASS);
+		
+		Assert.assertEquals(22, visitor
+				.getLazyClasses()
+				.size());
+		Assert.assertTrue(visitor
+				.getLazyClasses()
+				.contains("org.jfree.chart.text.AttributedStringUtils"));
+		Assert.assertTrue(visitor
+				.getLazyClasses()
+				.contains("org.jfree.data.general.DefaultKeyedValuesDataset"));
+		
+	}
+	
+	@Test
 	public void parseLongMethodDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("longMethod.ini");

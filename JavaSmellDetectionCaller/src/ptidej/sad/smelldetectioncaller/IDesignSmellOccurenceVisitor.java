@@ -26,5 +26,7 @@ public interface IDesignSmellOccurenceVisitor {
 	void visitLongParameterListClass(String className);
 	
 	void visitLongMethodClass(String className);
+	
+	void visitLazyClass(String className);
 
 }

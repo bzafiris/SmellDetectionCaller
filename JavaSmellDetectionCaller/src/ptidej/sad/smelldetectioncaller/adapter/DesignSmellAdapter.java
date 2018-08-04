@@ -39,7 +39,9 @@ public abstract class DesignSmellAdapter {
 	public static final String MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX = "ManyFieldAttributesButNotComplex";
 	// done
 	public static final String LONG_PARAMETER_LIST = "LongParameterList";
+	// done
 	public static final String LONG_METHOD = "LongMethod";
+	
 	public static final String LAZY_CLASS = "LazyClass";
 	public static final String LARGE_CLASS = "LargeClass";
 	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";

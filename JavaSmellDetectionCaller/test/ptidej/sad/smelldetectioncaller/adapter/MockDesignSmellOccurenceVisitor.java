@@ -17,6 +17,15 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> manyFieldAttributesButNotComplexClasses = new HashSet<>();
 	Set<String> longParameterListClasses = new HashSet<>();
 	Set<String> longMethodClasses = new HashSet<>();
+	Set<String> lazyClasses = new HashSet<>();
+
+	
+	
+	
+	@Override
+	public void visitLazyClass(String className) {
+		lazyClasses.add(className);
+	}
 
 	@Override
 	public void visitLongMethodClass(String className) {
@@ -110,4 +119,8 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 		return longMethodClasses;
 	}
 
+	public Set<String> getLazyClasses() {
+		return lazyClasses;
+	}
+	
 }
