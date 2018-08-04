@@ -21,7 +21,9 @@ import util.io.ReaderInputStream;
  */
 public abstract class DesignSmellAdapter {
 
+	// done
 	public static final String ANTISINGLETON = "AntiSingleton";
+	// pending
 	public static final String TRADITION_BREAKER = "TraditionBreaker";
 	public static final String SWISS_ARMY_KNIFE = "SwissArmyKnife";
 	public static final String SPECULATIVE_GENERALITY = "SpeculativeGenerality";
@@ -36,6 +38,7 @@ public abstract class DesignSmellAdapter {
 	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";
 	public static final String COMPLEX_CLASS = "ComplexClass";
 	public static final String CLASS_DATA_SHOULD_BE_PRIVATE = "ClassDataShouldBePrivate";
+	// done
 	public static final String BLOB = "Blob";
 	public static final String BASE_CLASS_SHOULD_BE_ABSTRACT = "BaseClassShouldBeAbstract";
 	public static final String BASE_CLASS_KNOWS_DERIVED_CLASS = "BaseClassKnowsDerivedClass";

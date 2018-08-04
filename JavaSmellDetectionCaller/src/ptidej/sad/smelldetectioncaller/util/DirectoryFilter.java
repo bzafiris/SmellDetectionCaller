@@ -8,6 +8,7 @@ public class DirectoryFilter {
     private static final DirectoryFilter NO_FILTER = new DirectoryFilter();
 
     private final List<String> inclusionPatterns = new ArrayList<>();
+    private final List<String> exclusionPatterns = new ArrayList<>();
 
     DirectoryFilter() {
     }
@@ -20,6 +21,8 @@ public class DirectoryFilter {
     public static DirectoryFilter production() {
         final DirectoryFilter fileFilter = new DirectoryFilter();
         fileFilter.addInclusionPattern("src/main/java");
+//        fileFilter.addInclusionPattern("src");
+        fileFilter.addExclusionPattern("src/test/java");
         return fileFilter;
     }
 
@@ -30,6 +33,11 @@ public class DirectoryFilter {
     void addInclusionPattern(String pattern) {
         inclusionPatterns.add(pattern);
     }
+    
+   
+    void addExclusionPattern(String pattern) {
+        exclusionPatterns.add(pattern);
+    }
 
     /**
      * Checks if a path is conform to this filter.
@@ -38,15 +46,13 @@ public class DirectoryFilter {
      * @return <code>true</code> if the path is conform
      */
     public boolean accept(String path) {
-        if (inclusionPatterns.isEmpty()) {
-            return true;
-        }
-
+       
         for (String pattern : inclusionPatterns) {
             if (path.endsWith(pattern)) {
                 return true;
             }
         }
+        
         return false;
     }
 }

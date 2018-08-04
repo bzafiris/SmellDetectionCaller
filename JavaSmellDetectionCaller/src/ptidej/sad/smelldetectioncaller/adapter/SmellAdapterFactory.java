@@ -1,5 +1,5 @@
 package ptidej.sad.smelldetectioncaller.adapter;
-
+ 
 public class SmellAdapterFactory {
 
 	
@@ -12,6 +12,8 @@ public class SmellAdapterFactory {
 			return new AntisingletonAdapter();
 		case DesignSmellAdapter.BLOB:
 			return new BlobAdapter();
+		case DesignSmellAdapter.SWISS_ARMY_KNIFE:
+			return new SwissArmyKnifeAdapter();
 
 		}
 

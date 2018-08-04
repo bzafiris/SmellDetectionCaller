@@ -22,5 +22,11 @@ public class DesignSmellOccurenceVisitor implements ISmellOccurenceVisitor {
 		blobs.add(className);
 		
 	}
+
+	@Override
+	public void visitSwissArmyKnife(String className) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

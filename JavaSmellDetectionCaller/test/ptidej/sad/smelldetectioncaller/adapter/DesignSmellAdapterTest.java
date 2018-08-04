@@ -25,12 +25,23 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseSwissArmyKnifeDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("swissArmyKnife.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.SWISS_ARMY_KNIFE);
+		
+		Assert.assertEquals(30, visitor.getSwissArmyKnives().size());
+		Assert.assertTrue(visitor.getSwissArmyKnives().contains("org.gudy.azureus2.pluginsimpl.local.sharing.test.ShareTester"));
+		
+	}
+	
+	@Test
 	public void parseBlobDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("blob.ini");
 		processDetectorOutput(detectorOutput, DesignSmellAdapter.BLOB);
 		
-		Assert.assertEquals(19, visitor.getBlobs().size());
+		Assert.assertEquals(8, visitor.getBlobs().size());
 		
 	}
 	
