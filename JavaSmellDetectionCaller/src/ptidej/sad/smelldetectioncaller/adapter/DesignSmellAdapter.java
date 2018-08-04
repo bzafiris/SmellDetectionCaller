@@ -43,7 +43,7 @@ public abstract class DesignSmellAdapter {
 	public static final String LONG_METHOD = "LongMethod";
 	// done
 	public static final String LAZY_CLASS = "LazyClass";
-	//
+	// done
 	public static final String LARGE_CLASS = "LargeClass";
 	
 	public static final String FUNCTIONAL_DECOMPOSITION = "FunctionalDecomposition";

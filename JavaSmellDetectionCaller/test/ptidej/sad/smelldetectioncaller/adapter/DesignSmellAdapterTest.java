@@ -25,6 +25,27 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
+	public void parseFunctionalDecompositionDetectorOutput(){
+		
+		String detectorOutput = loadPtidejOutputResource("functionalDecomposition.ini");
+		processDetectorOutput(detectorOutput, DesignSmellAdapter.FUNCTIONAL_DECOMPOSITION);
+		
+		Assert.assertEquals(19, visitor
+				.getFunctionalDecompositionClasses()
+				.size());
+		Assert.assertTrue(visitor
+				.getFunctionalDecompositionClasses()
+				.contains("com.sncf.gl.app.referentiel.outils.presentation.SupprimerOutilAction"));
+		Assert.assertTrue(visitor
+				.getFunctionalDecompositionClasses()
+				.contains("com.sncf.gl.app.referentiel.agent.metier.GestionPeriodes"));
+		Assert.assertTrue(visitor
+				.getFunctionalDecompositionClasses()
+				.contains("com.sncf.gl.common.referentiel.habilitation.presentation.ReferentielStartupServlet"));
+		
+	}
+	
+	@Test
 	public void parseLazyLargeClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("largeClass.ini");

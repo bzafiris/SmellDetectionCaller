@@ -21,9 +21,13 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	Set<String> longMethodClasses = new HashSet<>();
 	Set<String> lazyClasses = new HashSet<>();
 	Set<String> largeClasses = new HashSet<>();
+	Set<String> functionalDecompositionClasses = new HashSet<>();
 
-	
-	
+	@Override
+	public void visitFunctionalDecomposition(String className) {
+		functionalDecompositionClasses.add(className);
+	}
+
 	@Override
 	public void visitLargeClass(String className) {
 		largeClasses.add(className);
@@ -150,6 +154,10 @@ public class MockDesignSmellOccurenceVisitor implements IDesignSmellOccurenceVis
 	
 	public Set<String> getLargeClasses() {
 		return largeClasses;
+	}
+	
+	public Set<String> getFunctionalDecompositionClasses() {
+		return functionalDecompositionClasses;
 	}
 
 }
