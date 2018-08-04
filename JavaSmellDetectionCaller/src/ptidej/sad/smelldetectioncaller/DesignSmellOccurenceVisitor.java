@@ -8,6 +8,9 @@ import static ptidej.sad.smelldetectioncaller.DesignSmells.*;
  * 
  * @author bzafiris
  *
+ * Aggregates the code smell occurrences for each class.
+ * It is invoked by subclasses of {@link ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapter}
+ *
  */
 public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor {
 
@@ -35,7 +38,7 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 
 	@Override
 	public void visitSpaghettiCode(String className) {
-		setSingleSmellOccurrence(className, SPAGHETTI_CODE);
+		addSmellOccurrence(className, SPAGHETTI_CODE, 1);
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 
 	@Override
 	public void visitLongMethodClass(String className) {
-		setSingleSmellOccurrence(className, LONG_METHOD);
+		addSmellOccurrence(className, LONG_METHOD, 1);
 	}
 
 	@Override
@@ -112,12 +115,25 @@ public class DesignSmellOccurenceVisitor implements IDesignSmellOccurenceVisitor
 	public void visitTraditionBreaker(String className) {
 		setSingleSmellOccurrence(className, TRADITION_BREAKER);
 	}
-	
-	
+
 	private void setSingleSmellOccurrence(String className, String smell) {
 		DesignSmellOccurrenceSummary occurrenceSummary = designSmellOccurrencesPerClass.get(className);
+		if (occurrenceSummary == null) {
+			occurrenceSummary = new DesignSmellOccurrenceSummary(className);
+			designSmellOccurrencesPerClass.put(className, occurrenceSummary);
+		}
 		occurrenceSummary.setSingleSmellOccurrence(smell);
 	}
+
+	private void addSmellOccurrence(String className, String smell, int count) {
+		DesignSmellOccurrenceSummary occurrenceSummary = designSmellOccurrencesPerClass.get(className);
+		if (occurrenceSummary == null) {
+			occurrenceSummary = new DesignSmellOccurrenceSummary(className);
+			designSmellOccurrencesPerClass.put(className, occurrenceSummary);
+		}
+		occurrenceSummary.addSmellOccurrence(smell, count);
+	}
+
 	
 	public Map<String, DesignSmellOccurrenceSummary> getDesignSmellOccurrencesPerClass() {
 		return designSmellOccurrencesPerClass;

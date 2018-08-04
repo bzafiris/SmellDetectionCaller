@@ -18,6 +18,13 @@ import util.io.ReaderInputStream;
  * 
  * @author bzafiris
  *
+ * Processes the output of a specific smell detector (key-value pairs).
+ * Invokes the {@link ptidej.sad.smelldetectioncaller.DesignSmellOccurenceVisitor}
+ * depending on the identified smell. 
+ * See subclasses for more details.
+ * Examples of IDesignSmellDetection output is available in folder test-resources/rsc
+ * 
+ *
  */
 public abstract class DesignSmellAdapter {
 

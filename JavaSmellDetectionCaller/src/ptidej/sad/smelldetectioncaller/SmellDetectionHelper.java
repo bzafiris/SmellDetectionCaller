@@ -52,17 +52,29 @@ import static ptidej.sad.smelldetectioncaller.adapter.DesignSmellAdapter.*;
  */
 public final class SmellDetectionHelper {
 
-	public static final String[] SMELLS = new String[] { DesignSmells.ANTISINGLETON, DesignSmells.BASE_CLASS_KNOWS_DERIVED_CLASS,
-			DesignSmells.BASE_CLASS_SHOULD_BE_ABSTRACT, DesignSmells.BLOB, DesignSmells.CLASS_DATA_SHOULD_BE_PRIVATE, DesignSmells.COMPLEX_CLASS, DesignSmells.FUNCTIONAL_DECOMPOSITION,
-			DesignSmells.LARGE_CLASS, DesignSmells.LAZY_CLASS, DesignSmells.LONG_METHOD, DesignSmells.LONG_PARAMETER_LIST, DesignSmells.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX,
-			DesignSmells.MESSAGE_CHAINS, DesignSmells.REFUSED_PARENT_BEQUEST, DesignSmells.SPAGHETTI_CODE, DesignSmells.SPECULATIVE_GENERALITY, DesignSmells.SWISS_ARMY_KNIFE,
-			DesignSmells.TRADITION_BREAKER };
+	public static final String[] SMELLS = new String[] { DesignSmells.ANTISINGLETON,
+			DesignSmells.BASE_CLASS_KNOWS_DERIVED_CLASS, DesignSmells.BASE_CLASS_SHOULD_BE_ABSTRACT, DesignSmells.BLOB,
+			DesignSmells.CLASS_DATA_SHOULD_BE_PRIVATE, DesignSmells.COMPLEX_CLASS,
+			DesignSmells.FUNCTIONAL_DECOMPOSITION, DesignSmells.LARGE_CLASS, DesignSmells.LAZY_CLASS,
+			DesignSmells.LONG_METHOD, DesignSmells.LONG_PARAMETER_LIST,
+			DesignSmells.MANY_FIELD_ATTRIBUTES_BUT_NOT_COMPLEX, DesignSmells.MESSAGE_CHAINS,
+			DesignSmells.REFUSED_PARENT_BEQUEST, DesignSmells.SPAGHETTI_CODE, DesignSmells.SPECULATIVE_GENERALITY,
+			DesignSmells.SWISS_ARMY_KNIFE, DesignSmells.TRADITION_BREAKER };
 
 	private IDesignSmellOccurenceVisitor smellOccurenceVisitor;
 
 	public SmellDetectionHelper(IDesignSmellOccurenceVisitor smellOccurenceVisitor) {
 		super();
 		this.smellOccurenceVisitor = smellOccurenceVisitor;
+	}
+
+	private boolean dumpPtidejResults = false;
+
+	/**
+	 * Only for debug purposes
+	 */
+	public void setDumpPtidejResults() {
+		this.dumpPtidejResults = true;
 	}
 
 	public final void analyseCodeLevelModel(final String[] someSmells, final String aName,
@@ -82,28 +94,30 @@ public final class SmellDetectionHelper {
 					designSmellAdapter.accept(smellOccurenceVisitor);
 				}
 
-				final Class<?> detectionClass = Class.forName("sad.designsmell.detection.repository." + antipatternName
-						+ '.' + antipatternName + "Detection");
-				final IDesignSmellDetection detection = (IDesignSmellDetection) detectionClass.newInstance();
+				if (dumpPtidejResults) {
+					
+					final Class<?> detectionClass = Class.forName("sad.designsmell.detection.repository."
+							+ antipatternName + '.' + antipatternName + "Detection");
+					final IDesignSmellDetection detection = (IDesignSmellDetection) detectionClass.newInstance();
 
-				detection.detect(idiomLevelModel);
+					detection.detect(idiomLevelModel);
 
-				final String path = anOutputDirectory + "DetectionResults in " + aName + " for " + antipatternName
-						+ ".ini";
-				detection.output(new PrintWriter(ProxyDisk
-						// .getInstance().fileTempString()));
-						.getInstance().fileTempOutput(path)));
+					final String path = anOutputDirectory + "DetectionResults in " + aName + " for " + antipatternName
+							+ ".ini";
+					detection.output(new PrintWriter(ProxyDisk
+							// .getInstance().fileTempString()));
+							.getInstance().fileTempOutput(path)));
 
-				final Properties properties = new Properties();
-				properties.load(new ReaderInputStream(ProxyDisk.getInstance().fileTempInput(path)));
-				final OccurrenceBuilder solutionBuilder = OccurrenceBuilder.getInstance();
-				final Occurrence[] solutions = solutionBuilder.getCanonicalOccurrences(properties);
+					final Properties properties = new Properties();
+					properties.load(new ReaderInputStream(ProxyDisk.getInstance().fileTempInput(path)));
+					final OccurrenceBuilder solutionBuilder = OccurrenceBuilder.getInstance();
+					final Occurrence[] solutions = solutionBuilder.getCanonicalOccurrences(properties);
 
-				// extractClassesDefects(anOutputDirectory, aName,
-				// (IIdiomLevelModel) idiomLevelModel, someSmells[i],
-				// properties, solutionBuilder);
-
-				System.out.print(solutions.length);
+					// extractClassesDefects(anOutputDirectory, aName,
+					// (IIdiomLevelModel) idiomLevelModel, someSmells[i],
+					// properties, solutionBuilder);
+				}
+				
 				System.out.print(" solutions for ");
 				System.out.print(antipatternName);
 				System.out.print(" in ");

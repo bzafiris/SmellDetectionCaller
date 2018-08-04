@@ -108,7 +108,7 @@ public class DesignSmellAdapterTest extends JavaSmellDetectionCallerTestCase {
 	}
 	
 	@Test
-	public void parseLazyLargeClassDetectorOutput(){
+	public void parseLargeClassDetectorOutput(){
 		
 		String detectorOutput = loadPtidejOutputResource("largeClass.ini");
 		processDetectorOutput(detectorOutput, DesignSmells.LARGE_CLASS);

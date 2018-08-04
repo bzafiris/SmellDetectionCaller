@@ -10,56 +10,65 @@
  ******************************************************************************/
 package ptidej.sad.smelldetectioncaller;
 
-import java.util.Set;
+import java.io.File;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import ptidej.sad.smelldetectioncaller.util.ConsoleLogger;
 import ptidej.sad.smelldetectioncaller.util.DirectoryFilter;
+import ptidej.sad.smelldetectioncaller.util.FileLogger;
+import ptidej.sad.smelldetectioncaller.util.Logger;
 import ptidej.sad.smelldetectioncaller.util.SourceDirectoryScanner;
 
 public class SmellDetectionCaller {
-	
-	
-	public static String [] DIR_PATTERNS = new String[]{
-			"src/main/java/"
-	};
-	
+
+	public static String[] DIR_PATTERNS = new String[] { "src/main/java/" };
+
 	public static void main(final String[] args) {
-		
-		if (args.length < 3){
+
+		if (args.length < 3) {
 			System.out.println("Usage: SmellDetectionCaller <projectName> <rootFolder> <outputFolder>");
 			return;
 		}
-		/*SmellDetectionHelper.analyseCodeLevelModelFromJavaClassFiles("../0 - SmellDetectionCaller/bin/",
-				"SmellDetectionCaller Itself", "rsc/");*/
-		
+		/*
+		 * SmellDetectionHelper.
+		 * analyseCodeLevelModelFromJavaClassFiles("../0 - SmellDetectionCaller/bin/"
+		 * , "SmellDetectionCaller Itself", "rsc/");
+		 */
+
 		String projectName = args[0];
 		String rootFolder = args[1];
 		String outputFolder = args[2];
-		
+
 		DirectoryFilter fileFilter = DirectoryFilter.production();
 		SourceDirectoryScanner sourceDirectoryScanner = new SourceDirectoryScanner(fileFilter, rootFolder);
-		
+
 		String[] sourcePaths = sourceDirectoryScanner.listSourcePaths();
-		
-		for(String path: sourcePaths){
+
+		for (String path : sourcePaths) {
 			System.out.println(path);
 		}
-		
-		
+
 		DesignSmellOccurenceVisitor visitor = new DesignSmellOccurenceVisitor();
-		
+
 		SmellDetectionHelper smellDetectionHelper = new SmellDetectionHelper(visitor);
-		smellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(
-				SmellDetectionHelper.SMELLS,
-				new String[]{},
-				sourcePaths,
-				projectName, outputFolder);
+		smellDetectionHelper.analyseCodeLevelModelFromJavaSourceFilesEclipse(SmellDetectionHelper.SMELLS,
+				new String[] {}, sourcePaths, projectName, outputFolder);
 
 		
-		Set<String> antisingletons = visitor.getAntiSingletons();
-		for(String clazz: antisingletons){
-			System.out.println(clazz);
-		}
+		String fileName = outputFolder + File.separator + projectName + "-smells.csv";
 		
+		Logger logger = FileLogger.getInstance(fileName);
+		logger.logHeaders();
+
+		Map<String, DesignSmellOccurrenceSummary> map = visitor.getDesignSmellOccurrencesPerClass();
+		for (Entry<String, DesignSmellOccurrenceSummary> entry : map.entrySet()) {
+
+			logger.log(entry.getKey(), entry.getValue().getDesignSmellOccurrences());
+
+		}
+
+		logger.close();
 	}
-	
+
 }

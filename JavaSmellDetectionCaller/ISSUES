@@ -1,0 +1,12 @@
+> adapter.AntiSingletonAdapter
+- Count occurrences of "NotClassGlobalVariable-N.FieldName" 
+so as to compare the partial mitigation of the design smell
+
+> adapter.ClassDataShouleBePrivateAdapter
+- Count occurrences of FieldPublic-N.FieldName-N (for the same reason)
+
+> adapter.ManyFieldAtributesButNotComplexAdapter
+- Count occurrences of FieldPublic-N.FieldName-N (for the same reason)
+
+> adapter.SwissArmyKnifeAdapter
+- Count occurrences of MultipleInterface-0.InterfaceName-N (for the same reason)
